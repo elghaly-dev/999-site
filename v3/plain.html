@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Satar</title>
+<meta name="theme-color" content="#07080d">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="icon" type="image/png" href="../icons/icon-192.png">
+<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
+<style>
+  :root {
+    color-scheme: dark;
+    --night: #07080d;
+    --night-2: #0b0d17;
+    --panel: #101322;
+    --ivory: #ece4d1;
+    --ivory-dim: #b9b2a0;
+    --ivory-faint: #8b8574;
+    --gold: #d4af5a;
+    --gold-deep: #a9853c;
+    --gold-hair: rgba(212, 175, 90, 0.34);
+    --violet: #9a7bff;
+    --violet-deep: #5b3df0;
+    --danger: #ff7a66;
+    --danger-bg: rgba(229, 72, 77, 0.12);
+    --safe: #63cf96;
+    --safe-bg: rgba(63, 178, 127, 0.12);
+    --serif: "Cormorant Garamond", "Times New Roman", serif;
+    --caps: "Marcellus", "Cormorant Garamond", serif;
+    --sans: "Jost", "Segoe UI", system-ui, sans-serif;
+    --ar: "Amiri", serif;
+  }
+  * { box-sizing: border-box; }
+  ::selection { background: rgba(212, 175, 90, 0.35); color: #fff; }
+  body { max-width: 660px; margin: 0 auto; padding: 16px; line-height: 1.65; font-family: var(--sans); font-weight: 300; color: var(--ivory); -webkit-font-smoothing: antialiased;
+    background: radial-gradient(1100px 700px at 50% -10%, rgba(91, 61, 240, 0.16), transparent 60%),
+      radial-gradient(900px 600px at 85% 38%, rgba(212, 175, 90, 0.05), transparent 55%),
+      var(--night); background-attachment: fixed; }
+  html[lang="ar"] body { font-family: var(--ar), var(--sans); }
+  a { color: var(--gold); }
+  h1 { font-family: var(--caps); font-weight: 400; font-size: 2.6rem; letter-spacing: 0.34em; text-indent: 0.34em; text-transform: uppercase; line-height: 1; margin: 16px 0 0; text-align: center; color: var(--ivory); }
+  .sub { font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.35; color: var(--ivory-dim); text-align: center; margin: 14px auto 0; max-width: 34ch; }
+  html[lang="ar"] .sub { font-family: var(--ar); font-style: normal; }
+  .emblem { position: relative; width: 120px; height: 120px; margin: 8px auto 0; }
+  .emblem::before { content: ""; position: absolute; inset: 6% 10%; border-radius: 50%; background: radial-gradient(circle, rgba(122, 92, 255, 0.4), rgba(91, 61, 240, 0.12) 55%, transparent 72%); filter: blur(14px); }
+  .emblem img { position: relative; width: 100%; height: 100%; display: block; border-radius: 50%; -webkit-mask-image: radial-gradient(circle, #000 62%, transparent 71%); mask-image: radial-gradient(circle, #000 62%, transparent 71%); }
+  button { font-family: var(--sans); font-size: 1rem; font-weight: 400; letter-spacing: 0.04em; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--gold); background: transparent; color: var(--gold); cursor: pointer; margin: 8px 8px 8px 0; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+  button:hover { background: var(--gold); color: #0a0a08; }
+  button:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+  button.small { font-size: 0.9rem; padding: 6px 14px; }
+  .langbar { text-align: center; margin: 18px 0; }
+  .langbar button { font-size: 0.95rem; padding: 7px 16px; margin: 3px; border-color: rgba(236, 228, 209, 0.22); color: var(--ivory-dim); }
+  .langbar button:hover { border-color: var(--gold); background: transparent; color: var(--ivory); }
+  .langbar button.on { background: var(--gold); border-color: var(--gold); color: #0a0a08; font-weight: 500; }
+  section { background: linear-gradient(165deg, var(--panel), var(--night-2)); border: 1px solid rgba(212, 175, 90, 0.22); border-radius: 18px; padding: 20px; margin: 18px 0; }
+  h2 { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1.25; margin: 18px 0 8px; color: var(--ivory); }
+  section > h2:first-child { margin-top: 0; color: var(--gold); }
+  html[lang="ar"] h2 { font-family: var(--ar); font-weight: 400; }
+  textarea, input[type=text], input[type=number], input[type=password] { width: 100%; font-family: var(--sans); font-size: 1rem; padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(212, 175, 90, 0.22); background: rgba(7, 8, 13, 0.6); color: var(--ivory); margin: 4px 0; }
+  textarea { min-height: 110px; font-family: var(--serif); font-size: 1.15rem; line-height: 1.4; }
+  html[lang="ar"] textarea { font-family: var(--ar); }
+  textarea:focus, input:focus, select:focus { outline: none; border-color: var(--gold); }
+  textarea::placeholder, input::placeholder { color: var(--ivory-faint); }
+  select { font-family: var(--sans); font-size: 1rem; padding: 10px; border-radius: 12px; border: 1px solid rgba(212, 175, 90, 0.22); background: var(--panel); color: var(--ivory); margin: 4px 0; }
+  .verdict { font-family: var(--caps); font-size: 1.35rem; letter-spacing: 0.12em; padding: 12px 16px; border: 1.5px solid currentColor; border-radius: 6px; margin: 14px 0; }
+  .verdict > div + div { font-family: var(--serif); letter-spacing: 0; color: var(--ivory); }
+  html[lang="ar"] .verdict, html[lang="ar"] .verdict > div + div { font-family: var(--ar); letter-spacing: 0; }
+  .danger { color: var(--danger); background: var(--danger-bg); }
+  .unknown { color: var(--gold); background: rgba(212, 175, 90, 0.1); }
+  .safe { color: var(--safe); background: var(--safe-bg); }
+  .chip { display: inline-block; font-family: var(--sans); font-size: 0.95rem; font-weight: 400; letter-spacing: 0; padding: 2px 10px; margin: 4px 4px 0 0; border-radius: 999px; border: 1px solid currentColor; }
+  .note { font-size: 0.9rem; color: var(--ivory-faint); }
+  .row { margin: 6px 0; }
+  label { display: block; margin: 8px 0; color: var(--ivory-dim); }
+  li { color: var(--ivory-dim); margin: 4px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  td { padding: 6px 4px; border-bottom: 1px solid rgba(212, 175, 90, 0.14); }
+  td.t { font-weight: 500; }
+  tr.next td { background: rgba(212, 175, 90, 0.12); color: var(--gold); }
+  .cashrow { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px solid rgba(212, 175, 90, 0.14); }
+  .in { color: var(--safe); } .out { color: var(--danger); }
+  .songrow { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(212, 175, 90, 0.14); }
+  .songrow span { overflow-wrap: anywhere; }
+  audio { width: 100%; margin: 8px 0; }
+  footer { text-align: center; margin: 32px 0 8px; color: var(--ivory-dim); }
+  footer > div:first-child { font-family: var(--serif); font-style: italic; font-size: 1.35rem; color: var(--ivory); margin-bottom: 6px; }
+  .licfoot { text-align: center; font-size: 0.8rem; color: var(--ivory-faint); margin: 6px 0 28px; }
+  #lockOverlay { display: none; position: fixed; inset: 0; z-index: 99; background: rgba(7, 8, 13, 0.97); align-items: center; justify-content: center; }
+  #lockOverlay.open { display: flex; }
+  #lockBox { background: linear-gradient(165deg, var(--panel), var(--night-2)); border: 1px solid rgba(212, 175, 90, 0.3); border-radius: 18px; padding: 24px; max-width: 360px; width: 90%; text-align: center; }
+  #lockBox h2 { font-family: var(--caps); font-weight: 400; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ivory); }
+  #lockBox input { text-align: center; font-size: 1.4rem; letter-spacing: 0.4em; }
+  .draftbanner { background: rgba(212, 175, 90, 0.14); color: var(--gold); border: 1px solid var(--gold-hair); border-radius: 12px; padding: 10px; text-align: center; margin: 12px 0; font-family: var(--caps); letter-spacing: 0.12em; }
+
+  .pw-wrap { position: relative; }
+  .pw-wrap input { padding-inline-end: 72px; }
+  .pw-toggle { position: absolute; inset-inline-end: 8px; top: 50%; transform: translateY(-50%); margin: 0; padding: 4px 10px; font-size: 0.85rem; }
+  .pw-meter { height: 8px; border-radius: 999px; background: rgba(212, 175, 90, 0.15); margin: 12px 0 8px; overflow: hidden; border: 1px solid rgba(212, 175, 90, 0.22); }
+  .pw-meter > i { display: block; height: 100%; width: 0%; border-radius: 999px; transition: width 0.25s ease, background 0.25s ease; background: var(--danger); }
+  .pw-meter.med > i { background: var(--gold); }
+  .pw-meter.strong > i { background: var(--safe); }
+  #pwResult { min-height: 1.2em; }
+  @media (prefers-reduced-motion: reduce) { button { transition: none; } }
+</style>
+</head>
+<body>
+<div class="emblem"><img src="../icons/eye-256.webp" alt="" width="120" height="120"></div>
+<h1>Satar</h1>
+<p class="sub" data-t="sub"></p>
+<div class="langbar">
+  <button type="button" data-lang="ru" id="langRu">Русский</button>
+  <button type="button" data-lang="ar" id="langAr">العربية</button>
+  <button type="button" data-lang="en" id="langEn">English</button>
+  <button type="button" data-lang="zh" id="langZh">中文</button>
+</div>
+
+<section>
+  <h2 data-t="checkTitle"></h2>
+  <p data-t="checkHint"></p>
+  <textarea id="fwd" data-ph="checkPh"></textarea>
+  <br>
+  <button type="button" id="checkBtn" data-t="checkBtn"></button>
+  <button type="button" id="hearBtn" data-t="hearBtn"></button>
+  <div id="result"></div>
+  <p class="note" data-t="checkNote"></p>
+</section>
+
+<section id="pwSection">
+  <h2 data-t="pwTitle"></h2>
+  <p data-t="pwHint"></p>
+  <div class="pw-wrap">
+    <input type="password" id="pwInput" data-ph="pwPh" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" inputmode="text">
+    <button type="button" class="small pw-toggle" id="pwToggle" data-t="pwShow" aria-pressed="false"></button>
+  </div>
+  <div class="pw-meter" id="pwMeter" aria-hidden="true"><i id="pwBar"></i></div>
+  <div id="pwResult"></div>
+  <p class="note" data-t="pwNote"></p>
+</section>
+
+
+<section>
+  <h2 data-t="localTitle"></h2>
+  <p data-t="localIntro"></p>
+  <div class="row"><span data-t="netLabel"></span> <span id="netStatus">—</span></div>
+  <div class="row"><span data-t="inetLabel"></span> <span id="inetStatus">—</span></div>
+  <div class="row"><span data-t="gpsLabel"></span> <span id="gpsStatus">—</span></div>
+  <div id="badge" class="verdict unknown">—</div>
+  <button type="button" id="testBtn" data-t="testBtn"></button>
+  <button type="button" id="gpsBtn" data-t="gpsBtn"></button>
+  <p class="note" data-t="localNote"></p>
+
+  <h2 data-t="goLocal"></h2>
+  <label><input type="checkbox"> <span data-t="step1"></span></label>
+  <label><input type="checkbox"> <span data-t="step2"></span></label>
+  <label><input type="checkbox"> <span data-t="step3"></span></label>
+  <label><input type="checkbox"> <span data-t="step4"></span></label>
+
+  <h2 data-t="mapsTitle"></h2>
+  <p data-t="mapsText"></p>
+
+  <h2 data-t="notesTitle"></h2>
+  <textarea id="notes" data-ph="notesPh"></textarea>
+  <br>
+  <button type="button" id="saveNotesBtn" data-t="notesSave"></button>
+  <span id="notesMsg"></span>
+
+  <h2 data-t="limitsTitle"></h2>
+  <ul>
+    <li data-t="lim1"></li>
+    <li data-t="lim2"></li>
+    <li data-t="lim3"></li>
+    <li data-t="lim4"></li>
+  </ul>
+</section>
+
+
+<section>
+  <h2 data-t="voiceTitle"></h2>
+  <p data-t="voiceText"></p>
+  <button type="button" id="voiceTestBtn" data-t="voiceTest"></button>
+</section>
+
+<section>
+  <h2 data-t="nbTitle"></h2>
+  <p class="note" data-t="nbHint"></p>
+  <label><span data-t="nbType"></span>
+    <select id="nbType">
+      <option value="in" data-t="nbIn"></option>
+      <option value="out" data-t="nbOut"></option>
+    </select>
+  </label>
+  <label><span data-t="nbAmt"></span> <input type="number" id="nbAmt" step="0.01" min="0" placeholder="0.00"></label>
+  <label><span data-t="nbNote"></span> <input type="text" id="nbNote" data-ph="nbNotePh"></label>
+  <br>
+  <button type="button" id="nbAddBtn" data-t="nbAdd"></button>
+  <div class="row"><span data-t="nbBal"></span> <b id="nbBal">0.00</b></div>
+  <div id="nbList"></div>
+  <p class="note" id="nbEmpty" data-t="nbEmpty"></p>
+</section>
+
+<section>
+  <h2 data-t="lockTitle"></h2>
+  <p data-t="lockText"></p>
+  <label><span data-t="lockPass"></span> <input type="password" id="lockPass" inputmode="numeric" autocomplete="off" placeholder="••••"></label>
+  <br>
+  <button type="button" id="lockSetBtn" data-t="lockSet"></button>
+  <button type="button" id="lockFaceBtn" data-t="lockFace" style="display:none"></button>
+  <button type="button" id="lockNowBtn" data-t="lockNow"></button>
+  <div class="row" id="lockMsg"></div>
+  <p class="note" data-t="lockNote"></p>
+</section>
+
+<section>
+  <h2 data-t="recTitle"></h2>
+  <p data-t="recText"></p>
+  <button type="button" id="recExportBtn" data-t="recExport"></button>
+  <a id="recMailLink" href="#" style="display:none"><button type="button" data-t="recMail"></button></a>
+  <a id="recSmsLink" href="#" style="display:none"><button type="button" data-t="recSms"></button></a>
+  <div class="row" id="recMsg"></div>
+  <p class="note" data-t="recAttach"></p>
+  <label><span data-t="recImport"></span> <input type="file" id="recFile" accept=".json,application/json"></label>
+  <div class="row" id="recImportMsg"></div>
+</section>
+
+<section>
+  <h2 data-t="musTitle"></h2>
+  <p data-t="musText"></p>
+  <label><span data-t="musAdd"></span> <input type="file" id="musFile" accept="audio/*" multiple></label>
+  <div class="row" id="musMsg"></div>
+  <audio id="musPlayer" controls preload="none" style="display:none"></audio>
+  <div id="musList"></div>
+  <p class="note" id="musEmpty" data-t="musEmpty"></p>
+  <p class="note" data-t="musNote"></p>
+
+  <h2 data-t="freeTitle"></h2>
+  <p data-t="freeText"></p>
+  <button type="button" id="radioBtn" data-t="radioBtn"></button>
+  <button type="button" id="radioStopBtn" class="small" data-t="radioStop" style="display:none"></button>
+  <div class="row" id="radioNow"></div>
+  <div id="freeList"></div>
+  <p class="note" data-t="radioNote"></p>
+</section>
+
+<footer>
+  <div>Made by Wyndham Heaven and Muse 3️⃣💡5️⃣</div>
+  <div data-t="footFree"></div>
+  <div data-t="footNothing"></div>
+</footer>
+
+<div class="licfoot">
+  <div data-t="footLicense"></div>
+  <div data-t="footWarn"></div>
+</div>
+
+<div id="lockOverlay">
+  <div id="lockBox">
+    <div class="emblem"><img src="../icons/eye-256.webp" alt="" width="120" height="120"></div>
+    <h2>Satar</h2>
+    <p data-t="lockEnter"></p>
+    <input type="password" id="unlockPass" inputmode="numeric" autocomplete="off" placeholder="••••">
+    <br>
+    <button type="button" id="unlockBtn" data-t="lockUnlock"></button>
+    <button type="button" id="unlockFaceBtn" data-t="lockFace" style="display:none"></button>
+    <div class="row" id="unlockMsg"></div>
+    <p><a href="#" id="lockForgotLink" data-t="lockForgot"></a></p>
+  </div>
+</div>
+
+<script>
+function el(id) { return document.getElementById(id); }
+function $(sel) { return document.querySelector(sel); }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+var LANG = 'en';
+var LANGS = { ru: 'ru-RU', ar: 'ar-EG', en: 'en-US', zh: 'zh-CN' };
+
+var I18N = {
+en: {
+sub: 'Check a forward before you trust it. Nothing leaves your phone. 💜',
+checkTitle: '1. Check a forward', checkHint: 'Paste the forwarded message, caption, or claim here:',
+checkPh: 'Paste the forwarded message here...', checkBtn: 'Check', hearBtn: 'Hear verdict',
+checkNote: 'This is a pattern check on your phone, not proof. It errs on the side of caution. Nothing you paste is sent anywhere.',
+pasteFirst: 'PASTE FIRST', pasteFirstR: 'Nothing pasted yet.', pasteFirstA: 'Paste the forwarded message above, then tap Check.',
+vDanger: 'DANGEROUS', vUnknown: 'UNKNOWN', vSafe: 'NO WARNING SIGNS FOUND',
+rCode: 'It asks for a code or password.', aCode: 'Never send a code to anyone, ever. Delete it.',
+rLinkUrg: 'A link plus urgency is the classic trap.', aLinkUrg: 'Do not tap the link. Check with the sender on a different channel first.',
+rMoney: 'It promises money or a prize, or asks for payment.', aMoney: 'Do not pay, do not tap. Ask the sender directly.',
+rLink: 'It has a link or asks you to act, and I cannot verify it offline.', aLink: 'Do not tap yet. Check with the sender on a different channel first.',
+rSafe: 'No link, no code request, no money or prize found. This does not prove it is true — it only means the usual trap signs are missing.', aSafe: 'Still: if it later asks you to do something, check first.',
+rUrgent: 'It uses urgency or an account threat, and I cannot verify it offline.', aUrgent: 'Do not call numbers or tap anything in it. Check with the real institution on a channel you already trust.',
+rBank: 'It pretends to be a bank or your account, and pushes you to call, tap, or act now.', aBank: 'Do not call numbers or tap links in it. Contact the institution on a number or app you already trust.',
+localTitle: '2. Local Mode', localIntro: 'Run your phone on a local network with no internet, so remote hackers have no path in.',
+netLabel: 'Browser network:', inetLabel: 'Internet:', gpsLabel: 'GPS:',
+badgeNew: 'NOT TESTED YET', testBtn: 'Check network', gpsBtn: 'Show my position',
+netOnline: 'Browser says: online', netOffline: 'Browser says: offline', netUnavail: 'Browser network status unavailable.',
+inetOff: 'No network — no internet path in.', inetOn: 'Your phone has a network. This page does not contact the internet, so it cannot tell if that network reaches it. To check: open any website in your browser — if it loads, internet is on.',
+badgeOff: 'NO NETWORK', badgeOn: 'NETWORK ON — CHECK INTERNET YOURSELF',
+gpsUnavail: 'GPS is not available here. Open this page over https for GPS.', gpsWait: 'Waiting for GPS...',
+gpsNeed: 'GPS needs permission. It only receives signals, so it works offline.', gpsFail: 'GPS check failed. It only receives signals, so it works offline.',
+localNote: 'This check never contacts the internet — it only asks your phone whether it has a network. This page cannot tell if you are on Wi-Fi or mobile data — check that yourself. GPS only receives signals, so it works offline.',
+goLocal: 'Go Local — 4 steps', step1: '1. Airplane mode ON (cuts mobile data and calls)', step2: '2. Wi-Fi back ON while still in Airplane mode', step3: '3. Join a local network with no internet (a router with the internet cable unplugged, or a spare phone hotspot with its mobile data off)', step4: '4. Keep GPS ON',
+mapsTitle: 'Offline maps tip', mapsText: 'Download maps before you go offline: Google Maps or OsmAnd, both free.',
+notesTitle: 'Local notes', notesPh: 'Notes that stay on this phone...', notesSave: 'Save on this phone', notesSaved: 'Saved on this phone.', notesFail: 'Could not save on this phone (storage blocked).',
+limitsTitle: 'Honest limits', lim1: 'This protects against remote hackers only.', lim2: 'It does NOT protect against people on the same Wi-Fi.', lim3: 'Apps can still send saved data when internet returns — do not turn internet back on while sensitive apps are open.', lim4: 'A nearby radio attacker is a different problem from an internet hack.',
+voiceTitle: '3. Voice', voiceText: 'Hear results spoken by your phone. Voice uses your phone’s own speech — no internet, nothing sent anywhere.', voiceTest: 'Test voice', voiceSample: 'This is Satar. Check a forward before you trust it.',
+nbTitle: '4. Cash notebook', nbHint: 'A notebook, not a bank. Numbers only — no money moves here, nothing leaves this phone.',
+nbType: 'Type:', nbIn: 'In', nbOut: 'Out', nbAmt: 'Amount:', nbNote: 'Note:', nbNotePh: 'What was it for?',
+nbAdd: 'Add', nbBal: 'Balance:', nbEmpty: 'No entries yet.', nbDel: 'Delete',
+lockTitle: '5. Lock', lockText: 'Lock this app on this phone. A passcode keeps casual eyes out.',
+lockPass: 'Passcode (4 to 8 digits):', lockSet: 'Set passcode', lockSetOk: 'Passcode set. This app will ask for it next time it opens.',
+lockFace: 'Use Face ID', lockFaceOk: 'Face ID is set up for this app on this device.', lockFaceNo: 'Face ID is not available here — use your passcode.',
+lockNow: 'Lock now', lockUnlock: 'Unlock', lockEnter: 'Enter your passcode to open Satar.',
+lockWrong: 'Wrong passcode. Try again.', lockForgot: 'Forgot passcode? Clear the lock (your notes and notebook stay).',
+lockForgotOk: 'Lock cleared. Your notes and notebook are still here.', lockNote: 'This lock keeps casual eyes out. It is not a vault — keep your phone itself safe too.',
+recTitle: '6. Recovery', recText: 'Keep a copy of your notes and notebook, so a new phone can take over. This app never sends anything itself.',
+recExport: 'Export backup', recExported: 'Backup downloaded. Send this file yourself with your own mail or SMS app.',
+recMail: 'Open mail app', recSms: 'Open SMS app', recAttach: 'Mail and SMS apps cannot take a file from a link — attach the downloaded file by hand before you send.',
+recImport: 'Import a backup file:', recImported: 'Backup loaded. Your notes and notebook are back.', recBad: 'That file is not a Satar backup. Nothing changed.',
+footFree: 'Free web app, made with 💜, not for money.', footNothing: 'Nothing stored, nothing tracked, nothing sent anywhere.', footLicense: '© 2026 Wyndham Heaven (elghaly). All rights reserved.', footWarn: 'No copying, reuse or sale without written permission. Authorship and dates are recorded in this project’s public history on GitHub.', whatToDo: 'What to do:', whyWords: 'Words that raised this:',
+musTitle: '7. My music', musText: 'Add songs that are already on your phone. They are kept inside this app on this phone and play with no internet. Nothing is downloaded from anywhere, nothing is sent anywhere.',
+musAdd: 'Add songs from this phone:', musEmpty: 'No songs yet.', musPlay: 'Play', musDel: 'Delete', musAdded: 'Songs added: {n}.',
+musFail: 'Some files could not be added (not a song, or storage is full).', musNo: 'Music storage is not available in this browser.',
+musNote: 'Songs stay on this phone only and are not in the backup file. On iPhone, music may stop when the screen locks. Only add songs you have the right to play.',
+freeTitle: 'Free music in Satar', freeText: 'Melodies that are free for everyone (public domain), arranged and played for Satar. They play from this site; tap “Keep” to have one on this phone with no internet.',
+musKeep: 'Keep', musKept: 'Kept on this phone.', musNeedNet: 'Not on this phone yet. Connect once and tap “Keep”.',
+radioBtn: '📻 Satar Radio', radioStop: 'Stop', radioNow: 'Now playing:', radioEmpty: 'Nothing to play yet.',
+radioNote: 'Satar Radio plays the free music and your own songs, one after another. With no internet it plays only what is on this phone.',
+recMailBody: 'Satar backup — I will attach the downloaded satar-backup.json file by hand.',
+recSmsBody: 'Satar backup — I will attach the downloaded file by hand.',
+pwTitle: 'Password strength', pwHint: 'Type a password to see if it is weak, medium, or strong. Checked only on this phone — nothing is saved or sent.',
+pwPh: 'Type a password…', pwShow: 'Show', pwHide: 'Hide',
+pwNote: 'This check never leaves your phone. Nothing is stored. It is a guide, not a guarantee.',
+pwEmpty: 'Type a password above.',
+pwWeak: 'WEAK', pwMed: 'MEDIUM', pwStrong: 'STRONG',
+pwRShort: 'Too short.', pwRCommon: 'Too common or easy to guess.',
+pwRLetters: 'Only letters — no numbers or symbols.',
+pwRSimple: 'Mostly one kind of character.',
+pwROk: 'Mixed types, but still short or missing a symbol.',
+pwRGood: 'Long and mixed — letters, numbers, and symbols.',
+pwTShort: 'Use at least 12 characters.',
+pwTCommon: 'Avoid names, years, and simple sequences.',
+pwTMix: 'Mix upper and lower case, a number, and a symbol.',
+pwTLonger: 'Make it longer and add a symbol you will remember.',
+pwTKeep: 'Still: never reuse it, and never send it in a chat.'
+},
+ar: {
+sub: 'تحقق من الرسالة قبل أن تثق بها. لا شيء يغادر هاتفك. 💜',
+checkTitle: '١. تحقق من رسالة', checkHint: 'الصق الرسالة أو التعليق أو الادعاء هنا:',
+checkPh: 'الصق الرسالة هنا...', checkBtn: 'تحقق', hearBtn: 'اسمع النتيجة',
+checkNote: 'هذا فحص أنماط على هاتفك، وليس دليلاً. وهو يميل إلى الحذر. لا شيء مما تلصقه يُرسل إلى أي مكان.',
+pasteFirst: 'الصق أولاً', pasteFirstR: 'لم يتم لصق شيء بعد.', pasteFirstA: 'الصق الرسالة أعلاه ثم اضغط تحقق.',
+vDanger: 'خطير', vUnknown: 'غير معروف', vSafe: 'لا توجد علامات تحذير',
+rCode: 'يطلب رمزاً أو كلمة مرور.', aCode: 'لا ترسل رمزاً لأي شخص أبداً. احذفها.',
+rLinkUrg: 'رابط مع استعجال — هذا هو الفخ المعتاد.', aLinkUrg: 'لا تضغط على الرابط. تحقق مع المرسل عبر قناة أخرى أولاً.',
+rMoney: 'يعد بمال أو جائزة، أو يطلب دفعاً.', aMoney: 'لا تدفع ولا تضغط. اسأل المرسل مباشرة.',
+rLink: 'فيه رابط أو يطلب منك فعلاً، ولا أستطيع التحقق منه دون إنترنت.', aLink: 'لا تضغط بعد. تحقق مع المرسل عبر قناة أخرى أولاً.',
+rSafe: 'لم يُعثر على رابط ولا طلب رمز ولا مال أو جائزة. هذا لا يثبت أنها صحيحة — يعني فقط أن علامات الفخ المعتادة غير موجودة.', aSafe: 'مع ذلك: إذا طلب منك لاحقاً فعل شيء، تحقق أولاً.',
+rUrgent: 'فيها استعجال أو تهديد للحساب، ولا أستطيع التحقق منها دون إنترنت.', aUrgent: 'لا تتصل بأرقام فيها ولا تضغط على شيء. تحقق من الجهة الحقيقية عبر قناة تثق بها مسبقاً.',
+rBank: 'تدّعي أنها بنك أو حسابك، وتدفعك للاتصال أو الضغط أو التصرف فوراً.', aBank: 'لا تتصل بأرقام فيها ولا تضغط على روابط. تواصل مع الجهة عبر رقم أو تطبيق تثق به مسبقاً.',
+localTitle: '٢. الوضع المحلي', localIntro: 'شغّل هاتفك على شبكة محلية بلا إنترنت، حتى لا يجد المخترقون البعيدون طريقاً إليه.',
+netLabel: 'شبكة المتصفح:', inetLabel: 'الإنترنت:', gpsLabel: 'نظام تحديد المواقع:',
+badgeNew: 'لم يتم الاختبار بعد', testBtn: 'افحص الشبكة', gpsBtn: 'أظهر موقعي',
+netOnline: 'المتصفح يقول: متصل', netOffline: 'المتصفح يقول: غير متصل', netUnavail: 'حالة شبكة المتصفح غير متاحة.',
+inetOff: 'لا شبكة — لا طريق إنترنت إلى الداخل.', inetOn: 'هاتفك متصل بشبكة. هذه الصفحة لا تتصل بالإنترنت، لذلك لا تعرف هل هذه الشبكة تصل إليه. للتحقق: افتح أي موقع في متصفحك — إذا فُتح، فالإنترنت يعمل.',
+badgeOff: 'لا شبكة', badgeOn: 'الشبكة متصلة — تحقق من الإنترنت بنفسك',
+gpsUnavail: 'نظام تحديد المواقع غير متاح هنا. افتح الصفحة عبر https لنظام تحديد المواقع.', gpsWait: 'بانتظار نظام تحديد المواقع...',
+gpsNeed: 'نظام تحديد المواقع يحتاج إذناً. وهو يستقبل الإشارات فقط، فيعمل دون إنترنت.', gpsFail: 'فشل فحص نظام تحديد المواقع. وهو يستقبل الإشارات فقط، فيعمل دون إنترنت.',
+localNote: 'هذا الفحص لا يتصل بالإنترنت أبداً — يسأل هاتفك فقط هل لديه شبكة. هذه الصفحة لا تعرف هل أنت على Wi-Fi أم بيانات الهاتف — تحقق بنفسك. نظام تحديد المواقع يستقبل الإشارات فقط، فيعمل دون إنترنت.',
+goLocal: 'اذهب محلياً — ٤ خطوات', step1: '١. وضع الطيران مفعّل (يقطع البيانات والمكالمات)', step2: '٢. أعد تشغيل Wi-Fi وأنت ما زلت في وضع الطيران', step3: '٣. انضم إلى شبكة محلية بلا إنترنت (موجه بلا كابل إنترنت، أو نقطة اتصال من هاتف آخر بلا بيانات)', step4: '٤. أبقِ نظام تحديد المواقع مفعّلاً',
+mapsTitle: 'نصيحة الخرائط دون إنترنت', mapsText: 'حمّل الخرائط قبل أن تنقطع عن الإنترنت: خرائط Google أو OsmAnd، وكلاهما مجاني.',
+notesTitle: 'ملاحظات محلية', notesPh: 'ملاحظات تبقى على هذا الهاتف...', notesSave: 'احفظ على هذا الهاتف', notesSaved: 'تم الحفظ على هذا الهاتف.', notesFail: 'تعذر الحفظ على هذا الهاتف (التخزين محظور).',
+limitsTitle: 'حدود صريحة', lim1: 'هذا يحمي من المخترقين البعيدين فقط.', lim2: 'لا يحمي من أشخاص على نفس شبكة Wi-Fi.', lim3: 'التطبيقات قد ترسل بيانات محفوظة عند عودة الإنترنت — لا تعيد تشغيل الإنترنت وتطبيقات حساسة مفتوحة.', lim4: 'مهاجم راديو قريب مشكلة مختلفة عن اختراق الإنترنت.',
+voiceTitle: '٣. الصوت', voiceText: 'اسمع النتائج بصوت هاتفك نفسه. الصوت يستخدم نطق هاتفك — بلا إنترنت، ولا شيء يُرسل إلى أي مكان.', voiceTest: 'جرّب الصوت', voiceSample: 'هذا ستار. تحقق من الرسالة قبل أن تثق بها.',
+nbTitle: '٤. دفتر النقد', nbHint: 'دفتر ملاحظات، وليس بنكاً. أرقام فقط — لا مال يتحرك هنا، ولا شيء يغادر هذا الهاتف.',
+nbType: 'النوع:', nbIn: 'دخل', nbOut: 'خرج', nbAmt: 'المبلغ:', nbNote: 'ملاحظة:', nbNotePh: 'ما كان هذا؟',
+nbAdd: 'أضف', nbBal: 'الرصيد:', nbEmpty: 'لا إدخالات بعد.', nbDel: 'احذف',
+lockTitle: '٥. القفل', lockText: 'اقفل هذا التطبيق على هذا الهاتف. رمز المرور يبعد العيون العابرة.',
+lockPass: 'رمز المرور (٤ إلى ٨ أرقام):', lockSet: 'عيّن رمز المرور', lockSetOk: 'تم تعيين رمز المرور. سيطلبه التطبيق عند فتحه المرة القادمة.',
+lockFace: 'استخدم Face ID', lockFaceOk: 'تم إعداد Face ID لهذا التطبيق على هذا الجهاز.', lockFaceNo: 'Face ID غير متاح هنا — استخدم رمز المرور.',
+lockNow: 'اقفل الآن', lockUnlock: 'افتح', lockEnter: 'أدخل رمز المرور لفتح ستار.',
+lockWrong: 'رمز مرور خاطئ. حاول مجدداً.', lockForgot: 'نسيت رمز المرور؟ امسح القفل (ملاحظاتك ودفترك يبقيان).',
+lockForgotOk: 'تم مسح القفل. ملاحظاتك ودفترك ما زالا هنا.', lockNote: 'هذا القفل يبعد العيون العابرة. وهو ليس خزنة — حافظ على هاتفك نفسه آمناً أيضاً.',
+recTitle: '٦. الاستعادة', recText: 'احتفظ بنسخة من ملاحظاتك ودفترك، حتى يتسلمها هاتف جديد. هذا التطبيق نفسه لا يرسل شيئاً أبداً.',
+recExport: 'صدّر نسخة', recExported: 'تم تنزيل النسخة. أرسل هذا الملف بنفسك بتطبيق بريدك أو رسائلك.',
+recMail: 'افتح تطبيق البريد', recSms: 'افتح تطبيق الرسائل', recAttach: 'تطبيقات البريد والرسائل لا تأخذ ملفاً من رابط — أرفق الملف المنزّل بيدك قبل الإرسال.',
+recImport: 'استورد ملف نسخة:', recImported: 'تم تحميل النسخة. ملاحظاتك ودفترك عادا.', recBad: 'هذا الملف ليس نسخة ستار. لم يتغير شيء.',
+footFree: 'تطبيق ويب مجاني، صُنع بـ 💜، وليس للمال.', footNothing: 'لا شيء مخزّن، لا شيء متتبّع، لا شيء مرسَل إلى أي مكان.', footLicense: '© 2026 Wyndham Heaven (elghaly). جميع الحقوق محفوظة.', footWarn: 'يُمنع النسخ أو إعادة الاستخدام أو البيع إلا بإذن كتابي. اسم المؤلف والتواريخ مسجّلة في السجل العام لهذا المشروع على GitHub.', whatToDo: 'ما يجب فعله:', whyWords: 'الكلمات التي أثارت هذا التنبيه:',
+musTitle: '٧. موسيقاي', musText: 'أضف أغاني موجودة بالفعل على هاتفك. تُحفظ داخل هذا التطبيق على هذا الهاتف وتعمل بلا إنترنت. لا شيء يُنزَّل من أي مكان، ولا شيء يُرسل إلى أي مكان.',
+musAdd: 'أضف أغاني من هذا الهاتف:', musEmpty: 'لا أغاني بعد.', musPlay: 'شغّل', musDel: 'احذف', musAdded: 'أغانٍ أضيفت: {n}.',
+musFail: 'تعذرت إضافة بعض الملفات (ليست أغنية، أو التخزين ممتلئ).', musNo: 'تخزين الموسيقى غير متاح في هذا المتصفح.',
+musNote: 'الأغاني تبقى على هذا الهاتف فقط وليست في ملف النسخة الاحتياطية. على آيفون قد تتوقف الموسيقى عند قفل الشاشة. أضف فقط أغاني يحق لك تشغيلها.',
+freeTitle: 'موسيقى مجانية في ستار', freeText: 'ألحان حرّة للجميع (ملكية عامة)، وُزّعت وعُزفت لستار. تُشغَّل من هذا الموقع؛ اضغط «احفظ» لتبقى على هذا الهاتف وتعمل بلا إنترنت.',
+musKeep: 'احفظ', musKept: 'حُفظت على هذا الهاتف.', musNeedNet: 'ليست على هذا الهاتف بعد. اتصل بالإنترنت مرة واضغط «احفظ».',
+radioBtn: '📻 راديو ستار', radioStop: 'إيقاف', radioNow: 'يُشغَّل الآن:', radioEmpty: 'لا يوجد ما يُشغَّل بعد.',
+radioNote: 'راديو ستار يشغّل الموسيقى المجانية وأغانيك واحدة بعد الأخرى. بلا إنترنت يشغّل فقط ما هو محفوظ على هذا الهاتف.',
+recMailBody: 'نسخة ستار الاحتياطية — سأرفق ملف satar-backup.json المنزّل بنفسي.',
+recSmsBody: 'نسخة ستار الاحتياطية — سأرفق الملف المنزّل بنفسي.',
+pwTitle: 'قوة كلمة المرور', pwHint: 'اكتب كلمة مرور لترى إن كانت ضعيفة أو متوسطة أو قوية. الفحص على هذا الهاتف فقط — لا يُحفظ شيء ولا يُرسل.',
+pwPh: 'اكتب كلمة مرور…', pwShow: 'أظهر', pwHide: 'أخفِ',
+pwNote: 'هذا الفحص لا يغادر هاتفك أبداً. لا يُخزَّن شيء. وهو دليل، وليس ضماناً.',
+pwEmpty: 'اكتب كلمة مرور أعلاه.',
+pwWeak: 'ضعيفة', pwMed: 'متوسطة', pwStrong: 'قوية',
+pwRShort: 'قصيرة جداً.', pwRCommon: 'شائعة أو سهلة التخمين.',
+pwRLetters: 'حروف فقط — بلا أرقام أو رموز.',
+pwRSimple: 'معظمها من نوع واحد من الأحرف.',
+pwROk: 'أنواع مختلطة، لكنها ما زالت قصيرة أو بلا رمز.',
+pwRGood: 'طويلة ومختلطة — حروف وأرقام ورموز.',
+pwTShort: 'استخدم ١٢ حرفاً على الأقل.',
+pwTCommon: 'تجنب الأسماء والسنوات والتسلسلات البسيطة.',
+pwTMix: 'امزج حروفاً كبيرة وصغيرة ورقماً ورمزاً.',
+pwTLonger: 'اجعلها أطول وأضف رمزاً تتذكره.',
+pwTKeep: 'مع ذلك: لا تعد استخدامها، ولا ترسلها في محادثة.'
+},
+zh: {
+sub: '转发之前先核查。任何内容都不会离开你的手机。💜',
+checkTitle: '1. 核查转发', checkHint: '把转发的消息、说明或说法粘贴在这里：',
+checkPh: '把转发的消息粘贴在这里...', checkBtn: '核查', hearBtn: '听结果',
+checkNote: '这是手机上的模式检查，不是证明。它偏向谨慎。你粘贴的任何内容都不会被发送到任何地方。',
+pasteFirst: '请先粘贴', pasteFirstR: '还没有粘贴任何内容。', pasteFirstA: '先在上面粘贴转发的消息，然后点核查。',
+vDanger: '危险', vUnknown: '未知', vSafe: '未发现危险迹象',
+rCode: '它索要验证码或密码。', aCode: '永远不要把验证码发给任何人。删掉它。',
+rLinkUrg: '链接加催促，就是经典陷阱。', aLinkUrg: '不要点链接。先通过另一个渠道向发件人核实。',
+rMoney: '它承诺金钱或奖品，或要求付款。', aMoney: '不要付款，不要点击。直接问发件人。',
+rLink: '它有链接或要求你行动，而我离线无法核实。', aLink: '先不要点。先通过另一个渠道向发件人核实。',
+rSafe: '没有发现链接、索要验证码、金钱或奖品。这不能证明它是真的——只说明常见的陷阱迹象没有出现。', aSafe: '不过：如果它之后要求你做什么，先核查。',
+rUrgent: '它使用催促或账户威胁，而我离线无法核实。', aUrgent: '不要拨打其中的号码，也不要点任何内容。通过你已经信任的渠道向真实机构核实。',
+rBank: '它伪装成银行或你的账户，并催你马上致电、点击或采取行动。', aBank: '不要拨打其中的号码，也不要点其中的链接。通过你已经信任的电话或应用联系该机构。',
+localTitle: '2. 本地模式', localIntro: '让你的手机运行在没有互联网的本地网络上，这样远程黑客就没有入口。',
+netLabel: '浏览器网络：', inetLabel: '互联网：', gpsLabel: '定位：',
+badgeNew: '尚未测试', testBtn: '检查网络', gpsBtn: '显示我的位置',
+netOnline: '浏览器说：在线', netOffline: '浏览器说：离线', netUnavail: '浏览器网络状态不可用。',
+inetOff: '没有网络——没有互联网入口。', inetOn: '你的手机连着一个网络。本页不联系互联网，所以无法判断这个网络是否通向互联网。检查方法：在浏览器里打开任意网站——能打开，就说明互联网是通的。',
+badgeOff: '没有网络', badgeOn: '网络已连接——请自己检查互联网',
+gpsUnavail: '这里没有定位。请用 https 打开本页以使用定位。', gpsWait: '等待定位...',
+gpsNeed: '定位需要许可。它只接收信号，所以离线也能工作。', gpsFail: '定位检查失败。它只接收信号，所以离线也能工作。',
+localNote: '这个检查从不联系互联网——它只询问你的手机是否有网络。本页无法判断你用的是 Wi-Fi 还是移动数据——请自己检查。定位只接收信号，所以离线也能工作。',
+goLocal: '本地化——4 步', step1: '1. 打开飞行模式（切断移动数据和通话）', step2: '2. 保持飞行模式，重新打开 Wi-Fi', step3: '3. 加入一个没有互联网的本地网络（拔掉网线的路由器，或关闭移动数据的备用手机热点）', step4: '4. 保持定位开启',
+mapsTitle: '离线地图提示', mapsText: '离线之前先下载地图：Google 地图或 OsmAnd，都是免费的。',
+notesTitle: '本地笔记', notesPh: '只留在这部手机上的笔记...', notesSave: '保存在这部手机上', notesSaved: '已保存在这部手机上。', notesFail: '无法保存在这部手机上（存储被阻止）。',
+limitsTitle: '诚实的限度', lim1: '这只防范远程黑客。', lim2: '它不能防范同一 Wi-Fi 上的人。', lim3: '互联网恢复后，应用仍可能发送已保存的数据——敏感应用打开时不要重新联网。', lim4: '附近的无线电攻击者与互联网黑客是不同的问题。',
+voiceTitle: '3. 语音', voiceText: '用你手机自己的声音听结果。语音使用你手机的语音——没有互联网，任何内容都不会被发送。', voiceTest: '测试语音', voiceSample: '这是 Satar。转发之前先核查。',
+nbTitle: '4. 现金记账本', nbHint: '这是一本记账本，不是银行。只有数字——这里没有任何金钱流动，任何内容都不会离开这部手机。',
+nbType: '类型：', nbIn: '收入', nbOut: '支出', nbAmt: '金额：', nbNote: '备注：', nbNotePh: '这是什么？',
+nbAdd: '添加', nbBal: '余额：', nbEmpty: '还没有记录。', nbDel: '删除',
+lockTitle: '5. 锁定', lockText: '在这部手机上锁定这个应用。密码可以挡住随便看的人。',
+lockPass: '密码（4 到 8 位数字）：', lockSet: '设置密码', lockSetOk: '密码已设置。下次打开应用时会要求输入。',
+lockFace: '使用面容 ID', lockFaceOk: '这台设备上已为这个应用设置面容 ID。', lockFaceNo: '这里没有面容 ID——请使用密码。',
+lockNow: '现在锁定', lockUnlock: '解锁', lockEnter: '输入密码打开 Satar。',
+lockWrong: '密码错误。再试一次。', lockForgot: '忘记密码？清除锁定（你的笔记和记账本还在）。',
+lockForgotOk: '锁定已清除。你的笔记和记账本还在。', lockNote: '这个锁定只能挡住随便看的人。它不是保险箱——也要保护好你的手机本身。',
+recTitle: '6. 恢复', recText: '为你的笔记和记账本留一份副本，这样新手机可以接手。这个应用本身永远不会发送任何内容。',
+recExport: '导出备份', recExported: '备份已下载。请用你自己的邮件或短信应用自己发送这个文件。',
+recMail: '打开邮件应用', recSms: '打开短信应用', recAttach: '邮件和短信应用不能从链接里带上文件——发送前请手动附上下载的文件。',
+recImport: '导入备份文件：', recImported: '备份已载入。你的笔记和记账本回来了。', recBad: '这个文件不是 Satar 备份。没有任何改变。',
+footFree: '免费网页应用，用 💜 制作，不为金钱。', footNothing: '不存储、不追踪、不向任何地方发送。', footLicense: '© 2026 Wyndham Heaven (elghaly)。保留所有权利。', footWarn: '未经书面许可，禁止复制、再利用或出售。作者及日期记录在本项目于 GitHub 的公开历史中。', whatToDo: '该怎么做：', whyWords: '触发提醒的词：',
+musTitle: '7. 我的音乐', musText: '添加你手机里已有的歌曲。它们保存在这部手机上的这个应用里，没有互联网也能播放。不从任何地方下载，也不向任何地方发送。',
+musAdd: '从这部手机添加歌曲：', musEmpty: '还没有歌曲。', musPlay: '播放', musDel: '删除', musAdded: '已添加歌曲：{n}。',
+musFail: '有些文件无法添加（不是歌曲，或存储已满）。', musNo: '这个浏览器不支持保存音乐。',
+musNote: '歌曲只保存在这部手机上，不在备份文件里。在 iPhone 上，锁屏时音乐可能会停止。只添加你有权播放的歌曲。',
+freeTitle: 'Satar 里的免费音乐', freeText: '人人都可自由使用的旋律（公有领域），为 Satar 编配和演奏。它们从本网站播放；点“保存”即可存到这部手机上，无网也能播放。',
+musKeep: '保存', musKept: '已保存到这部手机。', musNeedNet: '还没有保存到这部手机。请联网一次并点“保存”。',
+radioBtn: '📻 Satar 电台', radioStop: '停止', radioNow: '正在播放：', radioEmpty: '暂时没有可播放的内容。',
+radioNote: 'Satar 电台依次播放免费音乐和你自己的歌曲。没有网络时，只播放这部手机上已有的。',
+recMailBody: 'Satar 备份——我会手动附上下载的 satar-backup.json 文件。',
+recSmsBody: 'Satar 备份——我会手动附上下载的文件。',
+pwTitle: '密码强度', pwHint: '输入密码，查看是弱、中还是强。只在本机检查——不保存、不发送。',
+pwPh: '输入密码…', pwShow: '显示', pwHide: '隐藏',
+pwNote: '此检查不会离开你的手机。不会存储任何内容。这是参考，不是保证。',
+pwEmpty: '请在上方输入密码。',
+pwWeak: '弱', pwMed: '中', pwStrong: '强',
+pwRShort: '太短。', pwRCommon: '太常见或容易猜到。',
+pwRLetters: '只有字母——没有数字或符号。',
+pwRSimple: '字符种类单一。',
+pwROk: '有混合，但仍偏短或缺少符号。',
+pwRGood: '够长且混合——字母、数字和符号。',
+pwTShort: '至少使用 12 个字符。',
+pwTCommon: '避免姓名、年份和简单序列。',
+pwTMix: '混合大小写、数字和符号。',
+pwTLonger: '再加长，并加一个你能记住的符号。',
+pwTKeep: '仍须注意：不要重复使用，也不要在聊天里发送。'
+},
+ru: {
+sub: 'Проверьте пересланное сообщение, прежде чем ему доверять. Ничего не покидает ваш телефон. 💜',
+checkTitle: '1. Проверка пересланного',
+checkHint: 'Вставьте сюда пересланное сообщение, подпись или утверждение:',
+checkPh: 'Вставьте сюда пересланное сообщение...',
+checkBtn: 'Проверить',
+hearBtn: 'Озвучить результат',
+checkNote: 'Это проверка по признакам на вашем телефоне, а не доказательство. Она склоняется к осторожности. Ничего из того, что вы вставили, никуда не отправляется.',
+pasteFirst: 'СНАЧАЛА ВСТАВЬТЕ',
+pasteFirstR: 'Пока ничего не вставлено.',
+pasteFirstA: 'Вставьте пересланное сообщение выше, затем нажмите «Проверить».',
+vDanger: 'ОПАСНО',
+vUnknown: 'НЕИЗВЕСТНО',
+vSafe: 'ПРИЗНАКОВ ОПАСНОСТИ НЕ НАЙДЕНО',
+rCode: 'Здесь просят код или пароль.',
+aCode: 'Никогда никому не отправляйте код. Удалите это сообщение.',
+rLinkUrg: 'Ссылка плюс срочность — классическая ловушка.',
+aLinkUrg: 'Не нажимайте на ссылку. Сначала проверьте у отправителя другим способом.',
+rMoney: 'Здесь обещают деньги или приз либо просят оплату.',
+aMoney: 'Не платите и не нажимайте. Спросите отправителя напрямую.',
+rLink: 'Здесь есть ссылка или просьба что-то сделать, и я не могу проверить это без интернета.',
+aLink: 'Пока не нажимайте. Сначала проверьте у отправителя другим способом.',
+rSafe: 'Не найдено ни ссылки, ни просьбы о коде, ни денег или приза. Это не доказывает, что это правда, — это значит лишь, что обычных признаков ловушки нет.',
+aSafe: 'Всё равно: если позже вас попросят что-то сделать, сначала проверьте.',
+rUrgent: 'Здесь срочность или угроза аккаунту, и я не могу проверить это без интернета.',
+aUrgent: 'Не звоните по номерам из сообщения и ничего не нажимайте. Проверьте в настоящем учреждении тем способом, которому вы уже доверяете.',
+rBank: 'Это выдаёт себя за банк или ваш счёт и торопит позвонить, нажать или действовать сразу.',
+aBank: 'Не звоните по номерам из сообщения и не нажимайте ссылки. Свяжитесь с организацией по номеру или в приложении, которым вы уже доверяете.',
+localTitle: '2. Локальный режим',
+localIntro: 'Пусть ваш телефон работает в локальной сети без интернета — тогда у удалённых взломщиков не будет к нему пути.',
+netLabel: 'Сеть браузера:',
+inetLabel: 'Интернет:',
+gpsLabel: 'GPS:',
+badgeNew: 'ЕЩЁ НЕ ПРОВЕРЕНО',
+testBtn: 'Проверить сеть',
+gpsBtn: 'Показать моё положение',
+netOnline: 'Браузер сообщает: в сети',
+netOffline: 'Браузер сообщает: не в сети',
+netUnavail: 'Состояние сети браузера недоступно.',
+inetOff: 'Сети нет — пути для интернета внутрь нет.',
+inetOn: 'У телефона есть сеть. Эта страница не обращается к интернету, поэтому не может сказать, выходит ли эта сеть в интернет. Чтобы проверить: откройте любой сайт в браузере — если он загрузится, интернет есть.',
+badgeOff: 'СЕТИ НЕТ',
+badgeOn: 'СЕТЬ ЕСТЬ — ПРОВЕРЬТЕ ИНТЕРНЕТ САМИ',
+gpsUnavail: 'GPS здесь недоступен. Откройте страницу через https для GPS.',
+gpsWait: 'Ожидание GPS...',
+gpsNeed: 'Для GPS нужно разрешение. Он только принимает сигналы, поэтому работает без интернета.',
+gpsFail: 'Проверка GPS не удалась. Он только принимает сигналы, поэтому работает без интернета.',
+localNote: 'Эта проверка никогда не обращается к интернету — она только спрашивает телефон, есть ли у него сеть. Эта страница не может сказать, вы на Wi-Fi или на мобильной связи — проверьте сами. GPS только принимает сигналы, поэтому работает без интернета.',
+goLocal: 'Перейти в локальный режим — 4 шага',
+step1: '1. Режим полёта ВКЛ (отключает мобильную связь и звонки)',
+step2: '2. Снова ВКЛ Wi-Fi, оставаясь в режиме полёта',
+step3: '3. Подключитесь к локальной сети без интернета (роутер с отключённым кабелем интернета или точка доступа запасного телефона с отключённой мобильной связью)',
+step4: '4. Держите GPS ВКЛ',
+mapsTitle: 'Подсказка про офлайн-карты',
+mapsText: 'Скачайте карты заранее, до отключения от интернета: Google Карты или OsmAnd, обе бесплатны.',
+notesTitle: 'Локальные заметки',
+notesPh: 'Заметки, которые остаются на этом телефоне...',
+notesSave: 'Сохранить на этом телефоне',
+notesSaved: 'Сохранено на этом телефоне.',
+notesFail: 'Не удалось сохранить на этом телефоне (хранилище заблокировано).',
+limitsTitle: 'Честные ограничения',
+lim1: 'Это защищает только от удалённых взломщиков.',
+lim2: 'Это НЕ защищает от людей в той же сети Wi-Fi.',
+lim3: 'Приложения всё равно могут отправить сохранённые данные, когда интернет вернётся — не включайте интернет, пока открыты чувствительные приложения.',
+lim4: 'Близкий радиовзломщик — другая проблема, а не интернет-взлом.',
+voiceTitle: '3. Голос',
+voiceText: 'Слушайте результаты голосом вашего телефона. Голос использует речь вашего телефона — без интернета, ничего никуда не отправляется.',
+voiceTest: 'Проверить голос',
+voiceSample: 'Это Сатар. Проверьте пересланное сообщение, прежде чем ему доверять.',
+nbTitle: '4. Денежная тетрадь',
+nbHint: 'Тетрадь, а не банк. Только цифры — здесь деньги никуда не движутся, ничего не покидает этот телефон.',
+nbType: 'Тип:',
+nbIn: 'Приход',
+nbOut: 'Расход',
+nbAmt: 'Сумма:',
+nbNote: 'Заметка:',
+nbNotePh: 'За что это было?',
+nbAdd: 'Добавить',
+nbBal: 'Остаток:',
+nbEmpty: 'Пока нет записей.',
+nbDel: 'Удалить',
+lockTitle: '5. Замок',
+lockText: 'Заприте это приложение на этом телефоне. Пароль убережёт от случайных глаз.',
+lockPass: 'Пароль (от 4 до 8 цифр):',
+lockSet: 'Установить пароль',
+lockSetOk: 'Пароль установлен. Приложение спросит его при следующем открытии.',
+lockFace: 'Использовать Face ID',
+lockFaceOk: 'Face ID настроен для этого приложения на этом устройстве.',
+lockFaceNo: 'Face ID здесь недоступен — используйте пароль.',
+lockNow: 'Запереть сейчас',
+lockUnlock: 'Открыть',
+lockEnter: 'Введите пароль, чтобы открыть Сатар.',
+lockWrong: 'Неверный пароль. Попробуйте снова.',
+lockForgot: 'Забыли пароль? Сбросить замок (ваши заметки и тетрадь останутся).',
+lockForgotOk: 'Замок сброшен. Ваши заметки и тетрадь на месте.',
+lockNote: 'Этот замок убережёт от случайных глаз. Это не сейф — берегите и сам телефон.',
+recTitle: '6. Восстановление',
+recText: 'Держите копию ваших заметок и тетради, чтобы новый телефон мог их принять. Само приложение никогда ничего не отправляет.',
+recExport: 'Экспорт копии',
+recExported: 'Копия скачана. Отправьте этот файл сами своим почтовым или SMS-приложением.',
+recMail: 'Открыть почту',
+recSms: 'Открыть SMS',
+recAttach: 'Почта и SMS не могут взять файл из ссылки — прикрепите скачанный файл вручную перед отправкой.',
+recImport: 'Импорт файла копии:',
+recImported: 'Копия загружена. Ваши заметки и тетрадь вернулись.',
+recBad: 'Этот файл — не копия Сатара. Ничего не изменилось.',
+footFree: 'Бесплатное веб-приложение, сделано с 💜, не ради денег.',
+footNothing: 'Ничего не хранится, ничего не отслеживается, ничего никуда не отправляется.', footLicense: '© 2026 Wyndham Heaven (elghaly). Все права защищены.', footWarn: 'Копирование, повторное использование и продажа без письменного разрешения запрещены. Авторство и даты записаны в открытой истории этого проекта на GitHub.',
+whatToDo: 'Что делать:',
+whyWords: 'Слова, вызвавшие предупреждение:',
+musTitle: '7. Моя музыка',
+musText: 'Добавьте песни, которые уже есть на вашем телефоне. Они хранятся внутри этого приложения на этом телефоне и играют без интернета. Ничего ниоткуда не скачивается и никуда не отправляется.',
+musAdd: 'Добавить песни с этого телефона:',
+musEmpty: 'Пока нет песен.',
+musPlay: 'Слушать',
+musDel: 'Удалить',
+musAdded: 'Добавлено песен: {n}.',
+musFail: 'Некоторые файлы не удалось добавить (это не песня или хранилище заполнено).',
+musNo: 'Хранилище музыки недоступно в этом браузере.',
+musNote: 'Песни остаются только на этом телефоне и не входят в файл резервной копии. На iPhone музыка может остановиться, когда экран блокируется. Добавляйте только песни, которые вы вправе слушать.',
+freeTitle: 'Бесплатная музыка в Сатаре',
+freeText: 'Мелодии, свободные для всех (общественное достояние), аранжированные и сыгранные для Сатара. Они играют с этого сайта; нажмите «Сохранить», чтобы мелодия была на телефоне и играла без интернета.',
+musKeep: 'Сохранить',
+musKept: 'Сохранено на этом телефоне.',
+musNeedNet: 'Пока нет на этом телефоне. Подключитесь один раз и нажмите «Сохранить».',
+radioBtn: '📻 Радио Сатар',
+radioStop: 'Стоп',
+radioNow: 'Сейчас играет:',
+radioEmpty: 'Пока нечего играть.',
+radioNote: 'Радио Сатар играет бесплатную музыку и ваши песни одну за другой. Без интернета — только то, что есть на этом телефоне.',
+recMailBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл satar-backup.json.',
+recSmsBody: 'Резервная копия Сатара — я сам прикреплю скачанный файл.',
+pwTitle: 'Надёжность пароля', pwHint: 'Введите пароль, чтобы увидеть: слабый, средний или сильный. Проверка только на этом телефоне — ничего не сохраняется и не отправляется.',
+pwPh: 'Введите пароль…', pwShow: 'Показать', pwHide: 'Скрыть',
+pwNote: 'Эта проверка никогда не покидает телефон. Ничего не сохраняется. Это ориентир, а не гарантия.',
+pwEmpty: 'Введите пароль выше.',
+pwWeak: 'СЛАБЫЙ', pwMed: 'СРЕДНИЙ', pwStrong: 'СИЛЬНЫЙ',
+pwRShort: 'Слишком короткий.', pwRCommon: 'Слишком простой или распространённый.',
+pwRLetters: 'Только буквы — без цифр и символов.',
+pwRSimple: 'В основном один тип символов.',
+pwROk: 'Есть смесь, но всё ещё коротко или нет символа.',
+pwRGood: 'Длинный и смешанный — буквы, цифры и символы.',
+pwTShort: 'Используйте не меньше 12 символов.',
+pwTCommon: 'Избегайте имён, годов и простых последовательностей.',
+pwTMix: 'Смешайте заглавные и строчные, цифру и символ.',
+pwTLonger: 'Сделайте длиннее и добавьте символ, который запомните.',
+pwTKeep: 'И всё же: не используйте повторно и не отправляйте в чат.'
+}
+};
+
+function T(key) { var d = I18N[LANG] || I18N.en; return (d[key] !== undefined) ? d[key] : (I18N.en[key] || ''); }
+
+function render() {
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = (LANG === 'ar') ? 'rtl' : 'ltr';
+  var nodes = document.querySelectorAll('[data-t]');
+  for (var i = 0; i < nodes.length; i++) {
+    var k = nodes[i].getAttribute('data-t');
+    nodes[i].textContent = T(k);
+  }
+  var phs = document.querySelectorAll('[data-ph]');
+  for (var j = 0; j < phs.length; j++) {
+    var pk = phs[j].getAttribute('data-ph');
+    phs[j].placeholder = T(pk);
+  }
+  var opts = document.querySelectorAll('option[data-t]');
+  for (var m = 0; m < opts.length; m++) {
+    opts[m].textContent = T(opts[m].getAttribute('data-t'));
+  }
+  ['langRu', 'langAr', 'langEn', 'langZh'].forEach(function (id) { el(id).classList.remove('on'); });
+  el(LANG === 'ru' ? 'langRu' : LANG === 'ar' ? 'langAr' : LANG === 'en' ? 'langEn' : 'langZh').classList.add('on');
+  el('badge').textContent = T('badgeNew');
+  if (el('pwToggle')) {
+    var pwShow = el('pwInput') && el('pwInput').type !== 'password';
+    el('pwToggle').textContent = pwShow ? T('pwHide') : T('pwShow');
+    if (el('pwResult')) renderPw();
+  }
+  renderCash();
+}
+
+function setLang(l) {
+  LANG = l;
+  try { localStorage.setItem('satar-lang', l); } catch (e) {}
+  render();
+  renderMusic();
+}
+
+function showVerdict(box, kind, title, reason, action) {
+  box.className = 'verdict ' + kind;
+  box.innerHTML = '<div>' + esc(title) + '</div>' +
+    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;">' + esc(reason) + '</div>' +
+    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;"><b>' + esc(T('whatToDo')) + '</b> ' + esc(action) + '</div>';
+}
+
+
+var PW_COMMON = { password:1, password1:1, '123456':1, '12345678':1, '123456789':1, qwerty:1, abc123:1, admin:1, letmein:1, welcome:1, monkey:1, dragon:1, master:1, login:1, passw0rd:1, '111111':1, '000000':1, iloveyou:1, football:1, baseball:1, sunshine:1, princess:1, football1:1, '123123':1, '654321':1, '121212':1, '112233':1 };
+
+function scorePassword(raw) {
+  var p = String(raw || '');
+  if (!p) return { level: '', title: '', reason: T('pwEmpty'), tip: '', width: 0 };
+  var lower = p.toLowerCase();
+  var hasL = /[a-z\u0610-\u06FF\u0400-\u04FF\u4e00-\u9fff]/.test(p);
+  var hasU = /[A-Z]/.test(p);
+  var hasD = /\d/.test(p);
+  var hasS = /[^A-Za-z0-9\u0610-\u06FF\u0400-\u04FF\u4e00-\u9fff]/.test(p);
+  var kinds = (hasL ? 1 : 0) + (hasU ? 1 : 0) + (hasD ? 1 : 0) + (hasS ? 1 : 0);
+  var common = !!PW_COMMON[lower] || /^(.)\1{3,}$/.test(p) || /^(012345|12345|123456|abcdef|qwerty)/i.test(p);
+  if (p.length < 8 || common) {
+    return { level: 'weak', title: T('pwWeak'), reason: common ? T('pwRCommon') : T('pwRShort'), tip: common ? T('pwTCommon') : T('pwTShort'), width: 28 };
+  }
+  if (kinds <= 1) {
+    return { level: 'weak', title: T('pwWeak'), reason: hasL && !hasD && !hasS ? T('pwRLetters') : T('pwRSimple'), tip: T('pwTMix'), width: 34 };
+  }
+  if (p.length >= 12 && kinds >= 3 && hasS) {
+    return { level: 'strong', title: T('pwStrong'), reason: T('pwRGood'), tip: T('pwTKeep'), width: 100 };
+  }
+  return { level: 'medium', title: T('pwMed'), reason: T('pwROk'), tip: T('pwTLonger'), width: 62 };
+}
+
+function renderPw() {
+  var box = el('pwResult');
+  var meter = el('pwMeter');
+  var bar = el('pwBar');
+  var input = el('pwInput');
+  if (!box || !input) return;
+  var r = scorePassword(input.value);
+  meter.className = 'pw-meter' + (r.level === 'medium' ? ' med' : r.level === 'strong' ? ' strong' : '');
+  bar.style.width = (r.width || 0) + '%';
+  if (!r.level) {
+    box.className = '';
+    box.textContent = r.reason;
+    return;
+  }
+  var kind = r.level === 'strong' ? 'safe' : r.level === 'medium' ? 'unknown' : 'danger';
+  box.className = 'verdict ' + kind;
+  box.innerHTML = '<div>' + esc(r.title) + '</div>' +
+    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;">' + esc(r.reason) + '</div>' +
+    '<div style="font-size:1rem;font-weight:normal;margin-top:6px;"><b>' + esc(T('whatToDo')) + '</b> ' + esc(r.tip) + '</div>';
+}
+
+function wirePw() {
+  var input = el('pwInput');
+  var tog = el('pwToggle');
+  if (!input || !tog) return;
+  input.addEventListener('input', renderPw);
+  // Never persist: clear any accidental autocomplete residue on leave.
+  input.addEventListener('blur', function () { /* value stays for UX while on page; never written to storage */ });
+  tog.addEventListener('click', function () {
+    var show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    tog.setAttribute('aria-pressed', show ? 'true' : 'false');
+    tog.textContent = show ? T('pwHide') : T('pwShow');
+  });
+  renderPw();
+}
+
+var PATTERNS = {
+  code: [/code|otp|password|passcode|\bpin\b/, /كود|رمز|كلمة السر|كلمة المرور|رمز التحقق/, /验证码|密码|口令|校验码/, /[Кк]од|[Пп]арол/],
+  send: [/send|share|give|tell me|enter (your |the )?(code|otp|password|pin)/, /أرسل|ارسل|شارك|اعط|أعط|اخبر|أخبر|أدخل (الكود|الرمز|رمز التحقق)/, /发送|分享|告诉|给我|输入(验证码|密码)/, /[Оо]тправ|[Пп]оделись|[Сс]ообщи|[Пп]ришл|[Вв]веди(те)? (код|пароль)/],
+  link: [/https?:\/\/|www\./, /(?![^\s]*@)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+(?:com|net|org|xyz|info|top|icu|click|link|live|site|online|shop|app|co|io|biz|cc|tk|ml|ga|cf|gq|ru|cn|me|tv|pw|work|club|vip|pro|dev|tech|store|zip|mov|ly|to|page|web|cloud|cfd)(?:\/[^\s]*)?/i, /https?:\/\/|www\.|رابط/, /https?:\/\/|www\.|链接|网址/, /https?:\/\/|www\.|[Сс]сылк/],
+  urgent: [/urgent|act now|immediately|account(?:\s+\w+){0,4}\s+(?:locked|suspended|closed|blocked)|(?:your\s+)?account\s+has\s+been\s+(?:locked|suspended|closed|blocked)|(?:locked|suspended|closed|blocked)\s+account|(?:your\s+)?card\s+(?:is\s+)?(?:locked|blocked|suspended)|verify\s+(?:now|immediately)|limited time|last chance|update (?:your )?(?:details|information|data)|parcel (?:is )?(?:held|pending|stuck)|within 24 hours/, /عاجل|فورا|فوراً|حسابك (مغلق|موقوف|معلق)|تم إيقاف حسابك|تم ايقاف حسابك|تحقق (الآن|فورا)|وقت محدود|فرصة أخيرة|حدث بياناتك|حدّث بياناتك|حدثي بياناتك|بطاقتك (موقوفة|محظورة|موقفة|مجمدة)|تم إيقاف بطاقتك|طردك معلق|شحنتك بانتظار|خلال (24|٢٤) ساعة/, /紧急|立即|马上|账户(被锁定|被冻结|已关闭|被暂停|已暂停)|立即验证|限时|最后机会|更新(您的)?(资料|信息|数据)/, /[Сс]рочно|[Нн]емедленно|[Сс]ейчас же|аккаунт (заблокирован|заморожен|закрыт)|[Пп]одтверд(и|ите) (сейчас|немедленно)|ограниченное время|последний шанс/],
+  money: [/send money|pay now|you (won|win)|prize|lottery|investment|double your money|bank account|unpaid fine|pay (the |your )?fine|customs (fee|duty|charges)|claim .{0,24}prize|won (aed|usd|\$|€)/i, /أرسل مال|ادفع|ادفع الآن|لدفع|ربحت|فزت|جائزة|يانصيب|استثمار|ضاعف مالك|حساب بنكي|غرامة|مخالفة|رسوم|سداد|سدّد|سدد|دفع (الرسوم|المخالفة|الغرامة)/, /汇款|付款|立即支付|你中奖了|中奖|彩票|投资|翻倍|银行账户/, /отправь деньги|заплат(и|ите) сейчас|вы (выиграли|победили)|приз|лотерея|инвестици|удво(й|ить) деньги|банковский сч[её]т/],
+  act: [/tap|click|download|forward this|share this/, /اضغط|انقر|حمّل|حمل|أعد التوجيه|أعد الإرسال|شارك هذا/, /点击|下载|转发|分享/, /нажм|клик|скача|перешл|поделись этим/],
+  bank: [/\bbank\b/, /بنك|مصرف/, /银行/, /банк/],
+  call: [/\bcall us\b|\bcall now\b|\bcall this (number|phone|line)\b|\bcontact us\b|\bphone us\b|\bdial\b|\bring us\b|\bplease call\b/, /اتصل بنا|اتصل الآن|اتصل فورا|اتصل فوراً|اتصل على|تواصل معنا|كلمنا/, /请致电|致电|给我们打电话|联系我们/, /позвоните нам|звоните нам|позвоните по|свяжитесь с нами/]
+};
+
+function matchAny(group, text, latinLower) {
+  var pats = PATTERNS[group];
+  for (var i = 0; i < pats.length; i++) {
+    var sources = [text, latinLower];
+    for (var s = 0; s < sources.length; s++) {
+      var src = sources[s];
+      var m = pats[i].exec(src);
+      if (!m) continue;
+      // Do not treat the domain in an email address as a link.
+      if (group === 'link' && m.index > 0 && src.charAt(m.index - 1) === '@') continue;
+      return true;
+    }
+  }
+  return false;
+}
+
+var lastVerdictText = '';
+
+// Latin, Cyrillic and Arabic letters: a match grows to its whole word.
+// Chinese has no spaces, so a Chinese match stays as matched.
+var WORD_CH = /[A-Za-z0-9_\u00C0-\u024F\u0400-\u04FF\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06FF]/;
+
+function wholeWord(src, start, end, isUrl) {
+  while (start > 0 && WORD_CH.test(src.charAt(start - 1))) start--;
+  while (end < src.length && (isUrl ? !/\s/.test(src.charAt(end)) : WORD_CH.test(src.charAt(end)))) end++;
+  var w = src.slice(start, end);
+  return w.length > 60 ? w.slice(0, 57) + '...' : w;
+}
+
+function matchWords(group, text, latinLower, out) {
+  var pats = PATTERNS[group];
+  for (var i = 0; i < pats.length; i++) {
+    var src = text, m = pats[i].exec(text);
+    if (!m) { src = latinLower; m = pats[i].exec(latinLower); }
+    if (!m) continue;
+    if (group === 'link' && m.index > 0 && src.charAt(m.index - 1) === '@') continue;
+    var w = wholeWord(src, m.index, m.index + m[0].length, /^(https?:\/\/|www\.)/i.test(m[0]) || /\./.test(m[0]));
+    if (w && out.indexOf(w) < 0) out.push(w);
+  }
+  return out;
+}
+
+function showWords(box, words) {
+  if (!words.length) return;
+  var d = document.createElement('div');
+  d.style.cssText = 'font-size:1rem;font-weight:normal;margin-top:6px;';
+  var b = document.createElement('b');
+  b.textContent = T('whyWords') + ' ';
+  d.appendChild(b);
+  for (var i = 0; i < words.length; i++) {
+    var s = document.createElement('span');
+    s.className = 'chip';
+    s.dir = 'auto';
+    s.textContent = words[i];
+    d.appendChild(s);
+  }
+  box.appendChild(d);
+}
+
+function checkForward() {
+  var box = el('result');
+  var text = el('fwd').value || '';
+  var latinLower = text.toLowerCase();
+  if (!text.trim()) {
+    showVerdict(box, 'unknown', T('pasteFirst'), T('pasteFirstR'), T('pasteFirstA'));
+    lastVerdictText = T('pasteFirst') + '. ' + T('pasteFirstR');
+    return;
+  }
+  var hasCode = matchAny('code', text, latinLower);
+  var asksSend = matchAny('send', text, latinLower);
+  var hasLink = matchAny('link', text, latinLower);
+  var urgent = matchAny('urgent', text, latinLower);
+  var money = matchAny('money', text, latinLower);
+  var act = matchAny('act', text, latinLower);
+  var isBank = matchAny('bank', text, latinLower);
+  var asksCall = matchAny('call', text, latinLower);
+  var kind, title, reason, action, groups = [];
+  if (hasCode && asksSend) {
+    kind = 'danger'; title = T('vDanger'); reason = T('rCode'); action = T('aCode'); groups = ['code', 'send'];
+  } else if (hasLink && urgent) {
+    kind = 'danger'; title = T('vDanger'); reason = T('rLinkUrg'); action = T('aLinkUrg'); groups = ['link', 'urgent'];
+  } else if (hasCode && urgent) {
+    kind = 'danger'; title = T('vDanger'); reason = T('rCode'); action = T('aCode'); groups = ['code', 'urgent'];
+  } else if (money) {
+    kind = 'danger'; title = T('vDanger'); reason = T('rMoney'); action = T('aMoney'); groups = ['money'];
+  } else if ((isBank && (urgent || asksCall || hasLink || act)) || (urgent && asksCall)) {
+    kind = 'danger'; title = T('vDanger'); reason = T('rBank'); action = T('aBank'); groups = ['bank', 'call', 'urgent', 'link', 'act'];
+  } else if (urgent) {
+    kind = 'unknown'; title = T('vUnknown'); reason = T('rUrgent'); action = T('aUrgent'); groups = ['urgent'];
+  } else if (hasLink || act) {
+    kind = 'unknown'; title = T('vUnknown'); reason = T('rLink'); action = T('aLink'); groups = ['link', 'act'];
+  } else {
+    kind = 'safe'; title = T('vSafe'); reason = T('rSafe'); action = T('aSafe');
+  }
+  showVerdict(box, kind, title, reason, action);
+  var words = [];
+  for (var g = 0; g < groups.length; g++) matchWords(groups[g], text, latinLower, words);
+  showWords(box, words);
+  lastVerdictText = title + '. ' + reason + ' ' + action;
+}
+
+function speak(text) {
+  try {
+    if (!('speechSynthesis' in window)) return false;
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = LANGS[LANG] || 'en-US';
+    window.speechSynthesis.speak(u);
+    return true;
+  } catch (e) { return false; }
+}
+
+function setBadge(kind, text) {
+  var b = el('badge');
+  b.className = 'verdict ' + kind;
+  b.textContent = text;
+}
+
+function testInternet() {
+  // Asks this phone only. No request leaves it.
+  var online = true;
+  try {
+    online = navigator.onLine !== false;
+    el('netStatus').textContent = online ? T('netOnline') : T('netOffline');
+  } catch (e) {
+    el('netStatus').textContent = T('netUnavail');
+  }
+  if (online) {
+    el('inetStatus').textContent = T('inetOn');
+    setBadge('unknown', T('badgeOn'));
+  } else {
+    el('inetStatus').textContent = T('inetOff');
+    setBadge('safe', T('badgeOff'));
+  }
+}
+
+function showGPS() {
+  try {
+    if (!navigator.geolocation) {
+      el('gpsStatus').textContent = T('gpsUnavail');
+      return;
+    }
+    el('gpsStatus').textContent = T('gpsWait');
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        el('gpsStatus').textContent = 'Latitude ' + pos.coords.latitude.toFixed(5) +
+          ', longitude ' + pos.coords.longitude.toFixed(5) +
+          ' (accuracy about ' + Math.round(pos.coords.accuracy) + ' meters).';
+      },
+      function () {
+        el('gpsStatus').textContent = T('gpsNeed');
+      },
+      { timeout: 10000 }
+    );
+  } catch (e) {
+    el('gpsStatus').textContent = T('gpsFail');
+  }
+}
+
+function loadNotes() {
+  try {
+    var saved = localStorage.getItem('satar-notes') || localStorage.getItem('fc-notes');
+    if (saved) el('notes').value = saved;
+  } catch (e) {}
+}
+
+function saveNotes() {
+  try {
+    localStorage.setItem('satar-notes', el('notes').value || '');
+    el('notesMsg').textContent = T('notesSaved');
+  } catch (e) {
+    el('notesMsg').textContent = T('notesFail');
+  }
+}
+
+
+
+function getCash() {
+  try {
+    var raw = localStorage.getItem('satar-cash');
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) { return []; }
+}
+
+function saveCash(list) {
+  try { localStorage.setItem('satar-cash', JSON.stringify(list)); } catch (e) {}
+}
+
+function renderCash() {
+  var list = getCash();
+  var bal = 0;
+  var html = '';
+  for (var i = list.length - 1; i >= 0; i--) {
+    var it = list[i];
+    var amt = Number(it.a) || 0;
+    bal += (it.t === 'in' ? amt : -amt);
+    html += '<div class="cashrow"><span>' + (it.t === 'in' ? '+' : '−') + ' ' + amt.toFixed(2) + ' — ' + esc(it.n || '') + ' <small>(' + esc(it.d || '') + ')</small></span>' +
+      '<button type="button" class="small" data-del="' + i + '">' + esc(T('nbDel')) + '</button></div>';
+  }
+  el('nbList').innerHTML = html;
+  el('nbBal').textContent = bal.toFixed(2);
+  el('nbEmpty').style.display = list.length ? 'none' : 'block';
+  var btns = el('nbList').querySelectorAll('[data-del]');
+  for (var j = 0; j < btns.length; j++) {
+    btns[j].addEventListener('click', (function (idx) {
+      return function () {
+        var l = getCash();
+        l.splice(idx, 1);
+        saveCash(l);
+        renderCash();
+      };
+    })(parseInt(btns[j].getAttribute('data-del'), 10)));
+  }
+}
+
+function hashPass(pass) {
+  function fallback() {
+    var h1 = 5381, h2 = 52711;
+    var s = 'satar:' + pass;
+    for (var i = 0; i < s.length; i++) {
+      h1 = ((h1 * 33) ^ s.charCodeAt(i)) >>> 0;
+      h2 = ((h2 * 33) ^ (s.charCodeAt(i) + 7)) >>> 0;
+    }
+    return Promise.resolve('fb:' + h1.toString(16) + ':' + h2.toString(16));
+  }
+  try {
+    if (window.crypto && crypto.subtle && window.isSecureContext) {
+      var data = new TextEncoder().encode('satar:' + pass);
+      return crypto.subtle.digest('SHA-256', data).then(function (buf) {
+        var arr = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('00' + b.toString(16)).slice(-2); });
+        return arr.join('');
+      }).catch(fallback);
+    }
+  } catch (e) {}
+  return fallback();
+}
+
+function lockIsSet() {
+  try { return !!localStorage.getItem('satar-lock'); } catch (e) { return false; }
+}
+
+function showLockOverlay() {
+  el('lockOverlay').classList.add('open');
+  el('unlockPass').value = '';
+  el('unlockMsg').textContent = '';
+  updateFaceButtons();
+}
+
+function hideLockOverlay() {
+  el('lockOverlay').classList.remove('open');
+  try { sessionStorage.setItem('satar-unlocked', '1'); } catch (e) {}
+}
+
+function updateFaceButtons() {
+  var supported = false;
+  try {
+    if (window.PublicKeyCredential && PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) {
+      PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then(function (ok) {
+        el('lockFaceBtn').style.display = ok ? '' : 'none';
+        el('unlockFaceBtn').style.display = ok ? '' : 'none';
+      }).catch(function () {});
+      return;
+    }
+  } catch (e) {}
+  el('lockFaceBtn').style.display = 'none';
+  el('unlockFaceBtn').style.display = 'none';
+}
+
+function setupFace() {
+  try {
+    if (!window.PublicKeyCredential) { el('lockMsg').textContent = T('lockFaceNo'); return; }
+    var challenge = new Uint8Array(32);
+    (window.crypto || {}).getRandomValues ? crypto.getRandomValues(challenge) : challenge.forEach(function (v, i, a) { a[i] = Math.floor(Math.random() * 256); });
+    var userId = new Uint8Array(16);
+    try { crypto.getRandomValues(userId); } catch (e) { userId.forEach(function (v, i, a) { a[i] = Math.floor(Math.random() * 256); }); }
+    navigator.credentials.create({
+      publicKey: {
+        challenge: challenge,
+        rp: { name: 'Satar' },
+        user: { id: userId, name: 'Satar', displayName: 'Satar' },
+        pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+        authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
+        timeout: 60000
+      }
+    }).then(function (cred) {
+      try { localStorage.setItem('satar-face', cred.id); } catch (e) {}
+      el('lockMsg').textContent = T('lockFaceOk');
+    }).catch(function () {
+      el('lockMsg').textContent = T('lockFaceNo');
+    });
+  } catch (e) {
+    el('lockMsg').textContent = T('lockFaceNo');
+  }
+}
+
+function unlockWithFace(msgEl) {
+  try {
+    var credId = localStorage.getItem('satar-face');
+    if (!credId || !navigator.credentials) { msgEl.textContent = T('lockFaceNo'); return; }
+    var challenge = new Uint8Array(32);
+    try { crypto.getRandomValues(challenge); } catch (e) { challenge.forEach(function (v, i, a) { a[i] = Math.floor(Math.random() * 256); }); }
+    navigator.credentials.get({
+      publicKey: {
+        challenge: challenge,
+        allowCredentials: [{ id: Uint8Array.from(atob(credId.replace(/-/g, '+').replace(/_/g, '/')), function (c) { return c.charCodeAt(0); }), type: 'public-key' }],
+        userVerification: 'required',
+        timeout: 60000
+      }
+    }).then(function () {
+      hideLockOverlay();
+    }).catch(function () {
+      msgEl.textContent = T('lockFaceNo');
+    });
+  } catch (e) {
+    msgEl.textContent = T('lockFaceNo');
+  }
+}
+
+function exportBackup() {
+  var data = { app: 'Satar', version: 3, date: new Date().toISOString() };
+  try {
+    data.notes = localStorage.getItem('satar-notes') || localStorage.getItem('fc-notes') || '';
+    data.cash = getCash();
+    data.lang = LANG;
+    try { data.loc = localStorage.getItem('satar-loc') || ''; } catch (e) { data.loc = ''; }
+  } catch (e) {}
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'satar-backup.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  el('recMsg').textContent = T('recExported');
+  var mailBody = encodeURIComponent(T('recMailBody'));
+  var smsBody = encodeURIComponent(T('recSmsBody'));
+  el('recMailLink').href = 'mailto:?subject=' + encodeURIComponent('Satar backup') + '&body=' + mailBody;
+  el('recSmsLink').href = 'sms:?body=' + smsBody;
+  el('recMailLink').style.display = '';
+  el('recSmsLink').style.display = '';
+}
+
+function importBackup(file) {
+  var reader = new FileReader();
+  reader.onload = function () {
+    try {
+      var data = JSON.parse(reader.result);
+      if (!data || (data.app !== 'Satar' && !Array.isArray(data.cash) && typeof data.notes !== 'string')) {
+        el('recImportMsg').textContent = T('recBad');
+        return;
+      }
+      if (typeof data.notes === 'string') localStorage.setItem('satar-notes', data.notes);
+      if (Array.isArray(data.cash)) saveCash(data.cash);
+      if (data.lang && I18N[data.lang]) setLang(data.lang);
+      el('recImportMsg').textContent = T('recImported');
+      loadNotes();
+      renderCash();
+    } catch (e) {
+      el('recImportMsg').textContent = T('recBad');
+    }
+  };
+  reader.readAsText(file);
+}
+
+var musDB = null;
+var musURL = null;
+
+function musOpen(cb) {
+  if (musDB) { cb(musDB); return; }
+  try {
+    if (!window.indexedDB) { cb(null); return; }
+    var req = indexedDB.open('satar-music', 1);
+    req.onupgradeneeded = function () {
+      var db = req.result;
+      if (!db.objectStoreNames.contains('meta')) db.createObjectStore('meta', { keyPath: 'id', autoIncrement: true });
+      if (!db.objectStoreNames.contains('data')) db.createObjectStore('data');
+    };
+    req.onsuccess = function () { musDB = req.result; cb(musDB); };
+    req.onerror = function () { cb(null); };
+  } catch (e) { cb(null); }
+}
+
+function musAdd(files) {
+  musOpen(function (db) {
+    if (!db) { el('musMsg').textContent = T('musNo'); return; }
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
+    var added = 0, failed = 0;
+    (function next() {
+      if (!files.length) {
+        var msg = T('musAdded').replace('{n}', added);
+        if (failed) msg += ' ' + T('musFail');
+        el('musMsg').textContent = msg;
+        renderMusic();
+        return;
+      }
+      var f = files.shift();
+      if (f.type && f.type.indexOf('audio/') !== 0) { failed++; next(); return; }
+      var reader = new FileReader();
+      reader.onload = function () {
+        try {
+          var tx = db.transaction(['meta', 'data'], 'readwrite');
+          var r = tx.objectStore('meta').add({ name: f.name, type: f.type || 'audio/mpeg', size: f.size, added: new Date().toISOString().slice(0, 10) });
+          r.onsuccess = function () { tx.objectStore('data').put(reader.result, r.result); };
+          tx.oncomplete = function () { added++; next(); };
+          tx.onabort = function () { failed++; next(); };
+        } catch (e) { failed++; next(); }
+      };
+      reader.onerror = function () { failed++; next(); };
+      reader.readAsArrayBuffer(f);
+    })();
+  });
+}
+
+function musButton(key, fn) {
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'small';
+  b.setAttribute('data-t', key);
+  b.textContent = T(key);
+  b.addEventListener('click', fn);
+  return b;
+}
+
+function renderMusic() {
+  musOpen(function (db) {
+    if (!db) { el('musEmpty').style.display = 'block'; renderFree([]); return; }
+    var items = [];
+    try {
+      var cur = db.transaction('meta', 'readonly').objectStore('meta').openCursor();
+      cur.onsuccess = function () {
+        var c = cur.result;
+        if (c) { items.push(c.value); c['continue'](); return; }
+        var box = el('musList');
+        box.textContent = '';
+        items.forEach(function (s) {
+          var row = document.createElement('div');
+          row.className = 'songrow';
+          var name = document.createElement('span');
+          name.dir = 'auto';
+          name.textContent = s.name;
+          var btns = document.createElement('span');
+          btns.appendChild(musButton('musPlay', function () { musPlay(s.id, s.name); }));
+          btns.appendChild(musButton('musDel', function () { musDelete(s.id); }));
+          row.appendChild(name);
+          row.appendChild(btns);
+          box.appendChild(row);
+        });
+        el('musEmpty').style.display = items.length ? 'none' : 'block';
+        renderFree(items);
+      };
+    } catch (e) {}
+  });
+}
+
+function musPlay(id, name) {
+  radioStop();
+  playItem({ idb: id, name: name || '' });
+}
+
+// Free music: public-domain melodies, arranged and played for Satar (see music/README.md).
+var FREE = [
+  { id: 'ode-to-joy', t: { en: 'Ode to Joy', ar: 'نشيد الفرح', ru: 'Ода к радости', zh: '欢乐颂' } },
+  { id: 'fur-elise', t: { en: 'Für Elise', ar: 'إلى إليزا', ru: 'К Элизе', zh: '致爱丽丝' } },
+  { id: 'greensleeves', t: { en: 'Greensleeves', ar: 'الأكمام الخضراء', ru: 'Зелёные рукава', zh: '绿袖子' } },
+  { id: 'canon-in-d', t: { en: 'Canon in D', ar: 'كانون في ري الكبير', ru: 'Канон ре мажор', zh: 'D大调卡农' } },
+  { id: 'gymnopedie-1', t: { en: 'Gymnopédie No. 1', ar: 'جيمنوبيدي رقم ١', ru: 'Гимнопедия № 1', zh: 'Gymnopédie 第1号' } },
+  { id: 'twinkle', t: { en: 'Twinkle, Twinkle', ar: 'تلألأ يا نجمي الصغير', ru: 'Мерцай, звёздочка', zh: '小星星' } },
+  { id: 'frere-jacques', t: { en: 'Frère Jacques', ar: 'الأخ جاك', ru: 'Братец Яков', zh: '两只老虎' } }
+];
+var radioOn = false, radioQueue = [], radioPos = 0, radioFails = 0;
+
+function freeTitle(s) { return s.t[LANG] || s.t.en; }
+
+function musAll(cb) {
+  musOpen(function (db) {
+    if (!db) { cb([]); return; }
+    var items = [];
+    try {
+      var cur = db.transaction('meta', 'readonly').objectStore('meta').openCursor();
+      cur.onsuccess = function () {
+        var c = cur.result;
+        if (c) { items.push(c.value); c['continue'](); return; }
+        cb(items);
+      };
+      cur.onerror = function () { cb([]); };
+    } catch (e) { cb([]); }
+  });
+}
+
+function keptId(items, freeId) {
+  for (var i = 0; i < items.length; i++) if (items[i].free === freeId) return items[i].id;
+  return null;
+}
+
+function freeItem(s, items) {
+  var id = keptId(items, s.id);
+  return id !== null ? { idb: id, name: freeTitle(s) } : { url: '../music/' + s.id + '.mp3', name: freeTitle(s) };
+}
+
+function renderFree(items) {
+  var box = el('freeList');
+  box.textContent = '';
+  FREE.forEach(function (s) {
+    var row = document.createElement('div');
+    row.className = 'songrow';
+    var name = document.createElement('span');
+    name.dir = 'auto';
+    name.textContent = freeTitle(s);
+    var btns = document.createElement('span');
+    btns.appendChild(musButton('musPlay', function () { radioStop(); playItem(freeItem(s, items)); }));
+    if (keptId(items, s.id) === null) {
+      btns.appendChild(musButton('musKeep', function () { keepFree(s); }));
+    } else {
+      var ok = document.createElement('span');
+      ok.className = 'note';
+      ok.textContent = ' ✓';
+      btns.appendChild(ok);
+    }
+    row.appendChild(name);
+    row.appendChild(btns);
+    box.appendChild(row);
+  });
+}
+
+function keepFree(s) {
+  fetch('../music/' + s.id + '.mp3').then(function (r) {
+    if (!r.ok) throw new Error('not ok');
+    return r.arrayBuffer();
+  }).then(function (buf) {
+    musOpen(function (db) {
+      if (!db) { el('musMsg').textContent = T('musNo'); return; }
+      try {
+        var tx = db.transaction(['meta', 'data'], 'readwrite');
+        var r = tx.objectStore('meta').add({ name: '♪ ' + freeTitle(s), type: 'audio/mpeg', size: buf.byteLength, added: new Date().toISOString().slice(0, 10), free: s.id });
+        r.onsuccess = function () { tx.objectStore('data').put(buf, r.result); };
+        tx.oncomplete = function () { el('musMsg').textContent = T('musKept'); renderMusic(); };
+        tx.onabort = function () { el('musMsg').textContent = T('musFail'); };
+      } catch (e) { el('musMsg').textContent = T('musFail'); }
+    });
+  }).catch(function () { el('musMsg').textContent = T('musNeedNet'); });
+}
+
+function playItem(item) {
+  var p = el('musPlayer');
+  function start(src) {
+    if (musURL) { URL.revokeObjectURL(musURL); musURL = null; }
+    if (src.blob) { musURL = URL.createObjectURL(src.blob); p.src = musURL; } else { p.src = src.url; }
+    p.style.display = 'block';
+    el('radioNow').textContent = item.name ? T('radioNow') + ' ' + item.name : '';
+    var pr = p.play();
+    if (pr && pr.catch) pr.catch(function () {});
+  }
+  if (item.url) { start({ url: item.url }); return; }
+  musOpen(function (db) {
+    if (!db) return;
+    try {
+      var tx = db.transaction(['meta', 'data'], 'readonly');
+      var m = tx.objectStore('meta').get(item.idb);
+      var d = tx.objectStore('data').get(item.idb);
+      tx.oncomplete = function () {
+        if (!m.result || !d.result) { radioNext(); return; }
+        start({ blob: new Blob([d.result], { type: m.result.type }) });
+      };
+    } catch (e) {}
+  });
+}
+
+function radioStart() {
+  musAll(function (items) {
+    var q = [];
+    var online = navigator.onLine !== false;
+    FREE.forEach(function (s) {
+      var it = freeItem(s, items);
+      if (it.idb !== undefined || online) q.push(it);
+    });
+    items.forEach(function (m) { if (!m.free) q.push({ idb: m.id, name: m.name }); });
+    if (!q.length) { radioStop(); el('radioNow').textContent = T('radioEmpty'); return; }
+    for (var i = q.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var x = q[i]; q[i] = q[j]; q[j] = x;
+    }
+    radioQueue = q; radioPos = 0; radioFails = 0; radioOn = true;
+    el('radioStopBtn').style.display = '';
+    playItem(radioQueue[0]);
+  });
+}
+
+function radioNext() {
+  if (!radioOn) return;
+  radioPos++;
+  if (radioPos >= radioQueue.length) { radioStart(); return; }
+  playItem(radioQueue[radioPos]);
+}
+
+function radioStop() {
+  radioOn = false;
+  el('radioStopBtn').style.display = 'none';
+}
+
+function musDelete(id) {
+  musOpen(function (db) {
+    if (!db) return;
+    try {
+      var tx = db.transaction(['meta', 'data'], 'readwrite');
+      tx.objectStore('meta')['delete'](id);
+      tx.objectStore('data')['delete'](id);
+      tx.oncomplete = renderMusic;
+    } catch (e) {}
+  });
+}
+
+el('checkBtn').addEventListener('click', checkForward);
+el('hearBtn').addEventListener('click', function () { if (lastVerdictText) speak(lastVerdictText); });
+el('testBtn').addEventListener('click', testInternet);
+el('gpsBtn').addEventListener('click', showGPS);
+el('saveNotesBtn').addEventListener('click', saveNotes);
+el('voiceTestBtn').addEventListener('click', function () { speak(T('voiceSample')); });
+el('langRu').addEventListener('click', function () { setLang('ru'); });
+el('langAr').addEventListener('click', function () { setLang('ar'); });
+el('langEn').addEventListener('click', function () { setLang('en'); });
+el('langZh').addEventListener('click', function () { setLang('zh'); });
+el('nbAddBtn').addEventListener('click', function () {
+  var amt = parseFloat(el('nbAmt').value);
+  if (isNaN(amt) || amt < 0) return;
+  var list = getCash();
+  list.push({ t: el('nbType').value, a: amt, n: el('nbNote').value || '', d: new Date().toISOString().slice(0, 10) });
+  saveCash(list);
+  el('nbAmt').value = '';
+  el('nbNote').value = '';
+  renderCash();
+});
+el('lockSetBtn').addEventListener('click', function () {
+  var p = el('lockPass').value || '';
+  if (!/^\d{4,8}$/.test(p)) { el('lockMsg').textContent = T('lockPass'); return; }
+  hashPass(p).then(function (h) {
+    try { localStorage.setItem('satar-lock', h); } catch (e) {}
+    el('lockMsg').textContent = T('lockSetOk');
+    el('lockPass').value = '';
+  });
+});
+el('lockFaceBtn').addEventListener('click', setupFace);
+el('lockNowBtn').addEventListener('click', function () {
+  try { sessionStorage.removeItem('satar-unlocked'); } catch (e) {}
+  if (lockIsSet()) showLockOverlay();
+});
+el('unlockBtn').addEventListener('click', function () {
+  var p = el('unlockPass').value || '';
+  hashPass(p).then(function (h) {
+    try {
+      if (localStorage.getItem('satar-lock') === h) { hideLockOverlay(); }
+      else { el('unlockMsg').textContent = T('lockWrong'); }
+    } catch (e) { el('unlockMsg').textContent = T('lockWrong'); }
+  });
+});
+el('unlockFaceBtn').addEventListener('click', function () { unlockWithFace(el('unlockMsg')); });
+el('lockForgotLink').addEventListener('click', function (ev) {
+  ev.preventDefault();
+  try { localStorage.removeItem('satar-lock'); localStorage.removeItem('satar-face'); } catch (e) {}
+  el('unlockMsg').textContent = T('lockForgotOk');
+  setTimeout(hideLockOverlay, 1200);
+});
+el('recExportBtn').addEventListener('click', exportBackup);
+el('recFile').addEventListener('change', function () { if (this.files && this.files[0]) importBackup(this.files[0]); });
+el('musFile').addEventListener('change', function () {
+  var list = [];
+  for (var i = 0; this.files && i < this.files.length; i++) list.push(this.files[i]);
+  this.value = '';
+  if (list.length) musAdd(list);
+});
+el('radioBtn').addEventListener('click', radioStart);
+el('radioStopBtn').addEventListener('click', function () { radioStop(); el('musPlayer').pause(); el('radioNow').textContent = ''; });
+el('musPlayer').addEventListener('ended', radioNext);
+el('musPlayer').addEventListener('playing', function () { radioFails = 0; });
+el('musPlayer').addEventListener('error', function () {
+  if (!radioOn) { el('musMsg').textContent = T('musNeedNet'); return; }
+  radioFails++;
+  if (radioFails >= radioQueue.length) { radioStop(); el('radioNow').textContent = T('radioEmpty'); return; }
+  radioNext();
+});
+
+(function init() {
+  try {
+    var savedLang = localStorage.getItem('satar-lang');
+    if (savedLang && I18N[savedLang]) LANG = savedLang;
+  } catch (e) {}
+  render();
+  loadNotes();
+  renderCash();
+  renderMusic();
+  try {
+    var savedLoc = localStorage.getItem('satar-loc');
+    if (savedLoc) {
+      var loc = JSON.parse(savedLoc);
+      if (loc && isFinite(loc.lat) && isFinite(loc.lon) && el('pLat') && el('pLon')) {
+        el('pLat').value = loc.lat;
+        el('pLon').value = loc.lon;
+      }
+    }
+  } catch (e) {}
+  updateFaceButtons();
+  try {
+    if (lockIsSet() && !sessionStorage.getItem('satar-unlocked')) showLockOverlay();
+  } catch (e) {}
+})();
+
+wirePw();
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function (rs) {
+    rs.forEach(function (r) { r.unregister(); });
+  });
+}
+window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); });
+</script>
+</body>
+</html>
