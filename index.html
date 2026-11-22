@@ -1,145 +1,48 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
 <title>Satar</title>
-<meta name="description" content="Satar by Wyndham Heaven: check a forward before you trust it. On your phone, off the net, privacy in your hand.">
-<meta property="og:title" content="Satar">
-<meta property="og:description" content="Satar by Wyndham Heaven: check a forward before you trust it. On your phone, off the net, privacy in your hand.">
-<meta property="og:url" content="https://999.elghaly.dev/">
+<meta name="description" content="Satar by Wyndham Heaven: check a forward before you trust it. Made for your phone.">
 <link rel="canonical" href="https://999.elghaly.dev/">
-<meta property="og:image" content="https://999.elghaly.dev/icons/icon-512.png">
-<meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#07080d">
-<link rel="stylesheet" href="fonts/fonts.css">
-<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<style>
-  :root {
-    color-scheme: dark;
-    --night: #07080d;
-    --night-2: #0b0d17;
-    --panel: #101322;
-    --ivory: #ece4d1;
-    --ivory-dim: #b9b2a0;
-    --ivory-faint: #8b8574;
-    --gold: #d4af5a;
-    --gold-deep: #a9853c;
-    --gold-hair: rgba(212, 175, 90, 0.34);
-    --violet: #9a7bff;
-    --violet-deep: #5b3df0;
-    --danger: #ff7a66;
-    --danger-bg: rgba(229, 72, 77, 0.12);
-    --safe: #63cf96;
-    --safe-bg: rgba(63, 178, 127, 0.12);
-    --serif: "Cormorant Garamond", "Times New Roman", "Noto Serif CJK SC", "Source Han Serif SC", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif, serif;
-    --caps: "Marcellus", "Cormorant Garamond", "Noto Serif CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif, serif;
-    --sans: "Jost", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "WenQuanYi Micro Hei", system-ui, sans-serif;
-    --ar: "Amiri", serif;
-  }
-  * { box-sizing: border-box; }
-  ::selection { background: rgba(212, 175, 90, 0.35); color: #fff; }
-body{margin:0;background:radial-gradient(1100px 700px at 50% -10%, rgba(91, 61, 240, 0.16), transparent 60%),radial-gradient(900px 600px at 85% 38%, rgba(212, 175, 90, 0.05), transparent 55%),var(--night);color:var(--ivory);font-family:var(--sans);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased}
-html[lang="ar"] body{font-family:var(--ar),var(--sans)}
-.wrap{max-width:720px;margin:0 auto;padding:28px 20px 40px}
-.eye{position:relative;width:min(220px,56vw);margin:0 auto}
-.eye::before{content:"";position:absolute;inset:6% 10%;border-radius:50%;background:radial-gradient(circle,rgba(122,92,255,.4),rgba(91,61,240,.12) 55%,transparent 72%);filter:blur(18px);animation:breathe 5.5s ease-in-out infinite}
-.eye img{position:relative;width:100%;height:auto;display:block;border-radius:50%;-webkit-mask-image:radial-gradient(circle,#000 62%,transparent 71%);mask-image:radial-gradient(circle,#000 62%,transparent 71%);animation:slowturn 90s linear infinite}
-@keyframes breathe{0%,100%{opacity:.65;transform:scale(.97)}50%{opacity:1;transform:scale(1.04)}}
-@keyframes slowturn{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-h1{font-family:var(--caps);font-weight:400;font-size:clamp(46px,10vw,72px);letter-spacing:.34em;text-indent:.34em;text-transform:uppercase;line-height:1;text-align:center;color:var(--ivory);margin:16px 0 0}
-.ar-name{font-family:var(--ar);text-align:center;color:var(--gold);font-size:28px;margin:10px 0 18px}
-.langs{text-align:center;margin:14px 0 22px}
-.langs button{font-family:var(--sans);background:transparent;border:1px solid rgba(236,228,209,.22);color:var(--ivory-dim);border-radius:999px;padding:7px 16px;margin:3px;cursor:pointer;font-size:15px;letter-spacing:.04em}
-.langs button:hover{border-color:var(--gold);color:var(--ivory)}
-.langs button.on{background:var(--gold);border-color:var(--gold);color:#0a0a08;font-weight:500}
-.tag{text-align:center;font-family:var(--serif);font-style:italic;font-size:clamp(26px,5vw,36px);line-height:1.25;margin:10px auto 6px;max-width:22ch}
-.sub{text-align:center;color:var(--ivory-dim);margin:10px 0}
-.yours{text-align:center;font-family:var(--serif);font-size:22px;color:var(--gold);margin:0 0 24px}
-html[lang="ar"] .tag,html[lang="ar"] .yours{font-family:var(--ar);font-style:normal}
-.card{background:linear-gradient(165deg,var(--panel),var(--night-2));border:1px solid rgba(212,175,90,.22);border-radius:18px;padding:20px;margin:14px 0}
-.card h2{margin:0 0 6px;color:var(--gold);font-family:var(--serif);font-weight:500;font-size:clamp(1.25rem,5.2vw,1.6rem);line-height:1.35;overflow-wrap:anywhere;word-break:normal}
-html[lang="ar"] .card h2{font-family:var(--ar);font-weight:400}
-.card p{margin:0 0 12px;color:var(--ivory-dim)}
-a.btn{display:inline-block;border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:9px 22px;text-decoration:none;letter-spacing:.04em}
-a.btn:hover{background:var(--gold);color:#0a0a08}
-span.btn.soon{display:inline-block;border:1px solid rgba(212,175,90,.28);color:var(--ivory-faint);border-radius:999px;padding:9px 22px;letter-spacing:.04em;cursor:default;pointer-events:none;opacity:.72;user-select:none}
-h2.sec{font-family:var(--caps);font-weight:400;font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin:40px 0 12px}
-html[lang="ar"] h2.sec{font-family:var(--ar);font-size:19px;letter-spacing:0}
-.note{color:var(--ivory-faint);line-height:1.6}
-.credit{text-align:center;margin-top:40px;font-family:var(--serif);font-style:italic;font-size:22px}
-.credit .sign{white-space:nowrap;font-style:normal}
-.licfoot{text-align:center;font-size:13px;color:var(--ivory-faint);margin-top:12px}
-@media (prefers-reduced-motion: reduce){.eye img,.eye::before{animation:none}}
-</style>
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<div class="wrap">
-<div class="eye"><img src="icons/eye-256.webp" alt="" width="256" height="256"></div>
+<header class="bar"><a class="mark" href="">Satar</a><a class="lang" href="ar/" lang="ar">العربية</a></header>
+<main>
+<section class="hero">
+<img class="eye" src="icons/eye-256.webp" width="128" height="128" alt="">
 <h1>Satar</h1>
-<div class="ar-name">ستار</div>
-<div class="langs">
-<button data-lang="ru">Русский</button>
-<button data-lang="ar" class="on">العربية</button>
-<button data-lang="en">English</button>
-<button data-lang="zh">中文</button>
+<p class="tag">Check a forward before you trust it.</p>
+<p class="sub">Made for your phone. Some features use the internet.</p>
+<p class="yours">It's yours, for you — for the people 💜</p>
+</section>
+<section>
+<h2>What it does</h2>
+<ul>
+<li><strong>Checking a forward.</strong> The text you paste is checked inside the page, on your phone. Satar does not send it anywhere.</li>
+<li><strong>Code check.</strong> A QR code or barcode is read on your phone, and checked for addresses that imitate Google or YouTube, hide their real address, or use short links. A link opens only if you tap "Open link".</li>
+<li><strong>No accounts, no ads and no analytics.</strong> Data we collect: none.</li>
+</ul>
+</section>
+<section>
+<h2>Choose your edition</h2>
+<div class="cards">
+<div class="card"><h3>No-prayer edition</h3><p>No prayer content.</p><span class="verify">[VERIFY: link to the app edition]</span></div>
+<div class="card"><h3>Christian edition</h3><p>4 daily prayers: morning, third, sunset, sleep.</p><span class="verify">[VERIFY: link to the app edition]</span></div>
+<div class="card"><h3>Islamic edition</h3><p>Prayer times + Adhan.</p><span class="verify">[VERIFY: link to the app edition]</span></div>
 </div>
-<p class="tag" data-i="tag">Check a forward before you trust it.</p>
-<p class="sub" data-i="sub">On your phone. Off the net. Privacy in your hand.</p>
-<p class="yours" data-i="yours">It's yours, for you — for the people 💜</p>
-<h2 class="sec" data-i="choose">Choose your edition</h2>
-<div class="card">
-<h2 data-i="ed_plain">无宗教版 · No-prayer edition</h2>
-<p data-i="ed_plain_d">不含宗教内容 · No prayer content.</p>
-<a class="btn" href="v3/plain.html" data-i="open">Open</a>
-</div>
-<div class="card">
-<h2 data-i="ed_christian">Christian edition</h2>
-<p data-i="ed_christian_d">4 daily prayers: morning, third, sunset, sleep.</p>
-<a class="btn" href="v3/christian.html" data-i="open">Open</a>
-</div>
-<div class="card">
-<h2 data-i="ed_islamic">Islamic edition</h2>
-<p data-i="ed_islamic_d">Prayer times + Adhan.</p>
-<a class="btn" href="v3/index.html" data-i="open">Open</a>
-</div>
-<div class="card">
-<h2 data-i="ed_chinese">Chinese edition</h2>
-<p data-i="ed_chinese_d">Chinese prayer times — coming later.</p>
-<span class="btn soon" data-i="soon" aria-disabled="true">Coming soon</span>
-</div>
-<div class="credit">Made by Wyndham Heaven and Muse <span class="sign">3️⃣💡5️⃣</span></div>
-<div class="licfoot">
-<div data-i="lic">© 2026 Wyndham Heaven (elghaly). All rights reserved.</div>
-<div data-i="warn">No copying, reuse or sale without written permission. Authorship and dates are recorded in this project’s public history on GitHub.</div>
-</div>
-</div>
-<script>
-var I18N={
-en:{tag:"Check a forward before you trust it.",sub:"On your phone. Off the net. Privacy in your hand.",yours:"It's yours, for you — for the people 💜",choose:"Choose your edition",ed_plain:"无宗教版 · No-prayer edition",ed_plain_d:"不含宗教内容 · No prayer content.",ed_christian:"Christian edition",ed_christian_d:"4 daily prayers: morning, third, sunset, sleep.",ed_islamic:"Islamic edition",ed_islamic_d:"Prayer times + Adhan.",ed_chinese:"Chinese edition · 中文版",ed_chinese_d:"Chinese prayer times — coming later.",open:"Open",soon:"Coming soon", lic:"© 2026 Wyndham Heaven (elghaly). All rights reserved.", warn:"No copying, reuse or sale without written permission. Authorship and dates are recorded in this project’s public history on GitHub."},
-ru:{tag:"Проверьте пересланное сообщение, прежде чем доверять ему.",sub:"На вашем телефоне. Вне сети. Конфиденциальность в ваших руках.",yours:"Это ваше, для вас — для людей 💜",choose:"Выберите версию",ed_plain:"无宗教版 · No-prayer edition",ed_plain_d:"不含宗教内容 · No prayer content.",ed_christian:"Христианская версия",ed_christian_d:"4 ежедневные молитвы: утреня, третий час, вечерня, повечерие.",ed_islamic:"Исламская версия",ed_islamic_d:"Время молитв + азан.",ed_chinese:"Китайская версия · 中文版",ed_chinese_d:"Китайские молитвенные времена — позже.",open:"Открыть",soon:"Скоро", lic:"© 2026 Wyndham Heaven (elghaly). Все права защищены.", warn:"Копирование, повторное использование и продажа без письменного разрешения запрещены. Авторство и даты записаны в открытой истории этого проекта на GitHub."},
-ar:{tag:"تحقق من الرسالة المُعاد توجيهها قبل أن تثق بها.",sub:"على هاتفك. بعيدًا عن الإنترنت. خصوصيتك بين يديك.",yours:"إنه لكم، من أجلكم — للناس 💜",choose:"اختر نسختك",ed_plain:"无宗教版 · No-prayer edition",ed_plain_d:"不含宗教内容 · No prayer content.",ed_christian:"النسخة المسيحية",ed_christian_d:"٤ صلوات يومية: باكر، الثالثة، الغروب، النوم.",ed_islamic:"النسخة الإسلامية",ed_islamic_d:"مواقيت الصلاة + الأذان.",ed_chinese:"النسخة الصينية · 中文版",ed_chinese_d:"مواقيت صلاة صينية — لاحقًا.",open:"فتح",soon:"قريبا", lic:"© 2026 Wyndham Heaven (elghaly). جميع الحقوق محفوظة.", warn:"يُمنع النسخ أو إعادة الاستخدام أو البيع إلا بإذن كتابي. اسم المؤلف والتواريخ مسجّلة في السجل العام لهذا المشروع على GitHub."},
-zh:{tag:"在相信之前，先检查转发的信息。",sub:"在你的手机上。脱离网络。隐私掌握在自己手中。",yours:"它是你们的，为你们 — 为了人们 💜",choose:"选择你的版本",ed_plain:"无宗教版 · No-prayer edition",ed_plain_d:"不含宗教内容 · No prayer content.",ed_christian:"基督教版",ed_christian_d:"每日4次祈祷：晨祷、第三时、黄昏、睡前。",ed_islamic:"伊斯兰版",ed_islamic_d:"礼拜时间 + 宣礼。",ed_chinese:"中文版",ed_chinese_d:"中文礼拜时间 — 稍后推出。",open:"打开",soon:"即将推出", lic:"© 2026 Wyndham Heaven (elghaly)。保留所有权利。", warn:"未经书面许可，禁止复制、再利用或出售。作者及日期记录在本项目于 GitHub 的公开历史中。"}
-};
-function setLang(l){
-document.documentElement.lang=l;
-document.documentElement.dir=(l==="ar")?"rtl":"ltr";
-var d=I18N[l]||I18N.en;
-var els=document.querySelectorAll("[data-i]");
-for(var i=0;i<els.length;i++){var k=els[i].getAttribute("data-i");if(d[k])els[i].textContent=d[k];}
-var bs=document.querySelectorAll(".langs button");
-for(var j=0;j<bs.length;j++){bs[j].className=(bs[j].getAttribute("data-lang")===l)?"on":"";}
-}
-var lbs=document.querySelectorAll(".langs button");
-for(var k=0;k<lbs.length;k++){lbs[k].addEventListener("click",function(){setLang(this.getAttribute("data-lang"));});}
-setLang('ar');
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function (rs) {
-    rs.forEach(function (r) { r.unregister(); });
-  });
-}
-window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); });
-</script>
+</section>
+<footer>
+<p><a href="privacy.html">Privacy</a> · <a href="ar/privacy.html" lang="ar">الخصوصية</a> · <a href="mailto:support@elghaly.dev">support@elghaly.dev</a></p>
+<p>Made by Wyndham Heaven and Muse · Elghaly LLC</p>
+<p class="muted">© 2026 Wyndham Heaven (elghaly). All rights reserved. No copying, reuse or sale without written permission. Authorship and dates are recorded in this project’s public history on GitHub.</p>
+</footer>
+</main>
 </body>
 </html>
